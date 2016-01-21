@@ -33,23 +33,24 @@ final class AnimationListenerOnSubscribe implements Observable.OnSubscribe<Void>
 
     @Override
     public void call(final Subscriber<? super Void> subscriber) {
+
         final AnimationListenerWrapper listener = new AnimationListenerWrapper(this) {
             @Override
-            protected void onStart(Animation animation) {
+            void onStart(Animation animation) {
                 if (mEventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
             }
 
             @Override
-            protected void onEnd(Animation animation) {
+            void onEnd(Animation animation) {
                 if (mEventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
             }
 
             @Override
-            protected void onRepeat(Animation animation) {
+            void onRepeat(Animation animation) {
                 if (mEventToCallOn == AnimationEvent.REPEAT && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
@@ -69,17 +70,17 @@ final class AnimationListenerOnSubscribe implements Observable.OnSubscribe<Void>
     private static abstract class AnimationListenerWrapper implements Animation.AnimationListener {
         AnimationListenerOnSubscribe mOnSubscribe;
 
-        public AnimationListenerWrapper(AnimationListenerOnSubscribe onSubscribe) {
+        AnimationListenerWrapper(AnimationListenerOnSubscribe onSubscribe) {
             this.mOnSubscribe = onSubscribe;
         }
 
-        protected abstract void onStart(Animation animation);
+        abstract void onStart(Animation animation);
 
-        protected abstract void onEnd(Animation animation);
+        abstract void onEnd(Animation animation);
 
-        protected abstract void onRepeat(Animation animation);
+        abstract void onRepeat(Animation animation);
 
-        public void onUnsubscribe() {
+        void onUnsubscribe() {
             mOnSubscribe = null;
         }
 
