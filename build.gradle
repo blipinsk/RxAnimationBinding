@@ -1,4 +1,6 @@
 ext {
+    androidPlugin = 'com.android.tools.build:gradle:1.5.0'
+
     configuration = [
             package          : "com.bartoszlipinski.rxanimationbinding",
             compileVersion   : 23,
@@ -10,18 +12,22 @@ ext {
     ]
 
     libraries = [
-            rx_android                : "1.1.0",
-            rx_java                   : "1.1.0",
-            support                   : "23.1.1",
+            rx_android: "1.1.0",
+            rx_java   : "1.1.0",
+            support   : "23.1.1"
+    ]
+
+    tests = [
+            supportTest: "0.4.1",
+            junit      : "4.12",
+            truth      : "0.27",
+            espresso   : "2.2.1"
     ]
 }
 
 buildscript {
     repositories {
         jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.5.0'
     }
 }
 

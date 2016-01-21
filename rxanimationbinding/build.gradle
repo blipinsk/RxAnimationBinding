@@ -1,7 +1,27 @@
+buildscript {
+    dependencies {
+        classpath rootProject.ext.androidPlugin
+    }
+}
+
 apply plugin: 'com.android.library'
 
 def cfg = rootProject.ext.configuration
 def libs = rootProject.ext.libraries
+def tests = rootProject.ext.tests
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "io.reactivex:rxandroid:${libs.rx_android}"
+    compile "io.reactivex:rxjava:${libs.rx_java}"
+
+    androidTestCompile project(':testing-utils')
+    androidTestCompile "com.android.support.test:runner:${tests.supportTest}"
+    androidTestCompile "com.android.support.test:rules:${tests.supportTest}"
+    androidTestCompile "junit:junit:${tests.junit}"
+    androidTestCompile "com.google.truth:truth:${tests.truth}"
+    compile 'com.android.support:appcompat-v7:23.1.1'
+}
 
 android {
     compileSdkVersion cfg.compileVersion
@@ -12,6 +32,7 @@ android {
         targetSdkVersion cfg.targetSdk
         versionCode cfg.versionCode
         versionName cfg.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -23,10 +44,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+
+    packagingOptions {
+        exclude 'META-INF/maven/com.google.guava/guava/pom.properties'
+        exclude 'META-INF/maven/com.google.guava/guava/pom.xml'
+    }
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    provided "io.reactivex:rxandroid:${libs.rx_android}"
-    provided "io.reactivex:rxjava:${libs.rx_java}"
-}
+
