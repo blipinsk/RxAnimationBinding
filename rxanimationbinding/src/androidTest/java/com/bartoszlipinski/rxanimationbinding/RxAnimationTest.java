@@ -46,6 +46,15 @@ public class RxAnimationTest {
         animation.setDuration(100);
     }
 
+    private void startAnimation() {
+        instrumentation.runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                parent.startAnimation(animation);
+            }
+        });
+    }
+
     @Test
     public void starts() {
         RecordingObserver<Void> o = new RecordingObserver<>();
@@ -66,12 +75,14 @@ public class RxAnimationTest {
         o.assertNoMoreEvents();
     }
 
-    private void startAnimation() {
-        instrumentation.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                parent.startAnimation(animation);
-            }
-        });
+
+    @Test
+    public void ends(){
+//        RecordingObserver<Void> o = new RecordingObserver<>();
+//        Subscription subscription = RxAnimation.ends(animation).subscribe(o);
+//        o.assertNoMoreEvents(); // No initial value.
+//
+//        startAnimation();
+//        o.assertNoMoreEvents();
     }
 }

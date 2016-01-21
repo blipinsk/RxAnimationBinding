@@ -15,7 +15,6 @@
  */
 package com.bartoszlipinski.rxanimationbinding;
 
-import android.util.Log;
 import android.view.animation.Animation;
 
 import rx.Observable;
@@ -34,11 +33,9 @@ final class AnimationListenerOnSubscribe implements Observable.OnSubscribe<Void>
 
     @Override
     public void call(final Subscriber<? super Void> subscriber) {
-        Log.d("TESTS", "AnimationListenerOnSubscribe " + "call");
         final AnimationListenerWrapper listener = new AnimationListenerWrapper(this) {
             @Override
             void onStart(Animation animation) {
-                Log.d("TESTS", "AnimationListenerOnSubscribe " + "onStart");
                 if (mEventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
@@ -46,7 +43,6 @@ final class AnimationListenerOnSubscribe implements Observable.OnSubscribe<Void>
 
             @Override
             void onEnd(Animation animation) {
-                Log.d("TESTS", "AnimationListenerOnSubscribe " + "onEnd");
                 if (mEventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
@@ -54,7 +50,6 @@ final class AnimationListenerOnSubscribe implements Observable.OnSubscribe<Void>
 
             @Override
             void onRepeat(Animation animation) {
-                Log.d("TESTS", "AnimationListenerOnSubscribe " + "onRepeat");
                 if (mEventToCallOn == AnimationEvent.REPEAT && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
@@ -66,7 +61,6 @@ final class AnimationListenerOnSubscribe implements Observable.OnSubscribe<Void>
         subscriber.add(new MainThreadSubscription() {
             @Override
             protected void onUnsubscribe() {
-                Log.d("TESTS", "AnimationListenerOnSubscribe " + "onUnsubscribe");
                 listener.onUnsubscribe();
             }
         });
@@ -91,7 +85,6 @@ final class AnimationListenerOnSubscribe implements Observable.OnSubscribe<Void>
 
         @Override
         public final void onAnimationStart(Animation animation) {
-            Log.d("TESTS", "AnimationListenerOnSubscribe " + "onAnimationStart");
             if (mOnSubscribe != null) {
                 onStart(animation);
             }

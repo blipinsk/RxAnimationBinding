@@ -32,7 +32,7 @@ android {
         targetSdkVersion cfg.targetSdk
         versionCode cfg.versionCode
         versionName cfg.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.bartoszlipinski.rxanimationbinding.RxAnimationBindingTestRunner"
     }
     buildTypes {
         release {
