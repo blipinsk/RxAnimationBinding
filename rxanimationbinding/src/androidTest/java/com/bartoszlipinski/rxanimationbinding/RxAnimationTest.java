@@ -33,7 +33,8 @@ public class RxAnimationTest {
     public void setUp() {
         SampleViewTestActivity activity = activityRule.getActivity();
         parent = activity.parent;
-        animation = new Animation() {};
+        animation = new Animation() {
+        };
         animation.setDuration(ANIMATION_DURATION_MILLIS);
     }
 
@@ -47,7 +48,7 @@ public class RxAnimationTest {
     }
 
     @Test
-    public void animationStarts() throws InterruptedException {
+    public void testAnimationStarts() throws Exception {
         RecordingObserver<Animation> o = new RecordingObserver<>();
         animation.setRepeatCount(0);
         Subscription subscription = RxAnimation.starts(animation).subscribe(o);
@@ -71,7 +72,7 @@ public class RxAnimationTest {
 
 
     @Test
-    public void animationEnds() {
+    public void testAnimationEnds() throws Exception {
         RecordingObserver<Animation> o = new RecordingObserver<>();
         animation.setRepeatCount(0);
         Subscription subscription = RxAnimation.ends(animation).subscribe(o);
@@ -93,7 +94,7 @@ public class RxAnimationTest {
     }
 
     @Test
-    public void animationRepeats() {
+    public void testAnimationRepeats() throws Exception {
         RecordingObserver<Animation> o = new RecordingObserver<>();
         animation.setRepeatCount(2);
         Subscription subscription = RxAnimation.repeats(animation).subscribe(o);
@@ -102,7 +103,7 @@ public class RxAnimationTest {
 
         startAnimation(); //first animation start
 
-        // <-0.5sec->
+        //              <-0.5sec->
         //              +--------+--------+--------+--------+--------+--------+--------+--------+--------+
         //              |        ANIMATION         |     ANIMATION (rep 1.)   |    ANIMATION (rep 2.)    |
         //              +--------+--------+--------+--------+--------+--------+--------+--------+--------+
@@ -111,8 +112,8 @@ public class RxAnimationTest {
         //                                                  {------------- 2nd window ----------}
 
 
-        assertThat(o.takeNext((int) (ANIMATION_DURATION_MILLIS * 4f/3f))).isNotNull();  //emission in the first window
-        assertThat(o.takeNext((int) (ANIMATION_DURATION_MILLIS * 4f/3f))).isNotNull();  //emission in the second window
+        assertThat(o.takeNext((int) (ANIMATION_DURATION_MILLIS * 4f / 3f))).isNotNull();  //emission in the first window
+        assertThat(o.takeNext((int) (ANIMATION_DURATION_MILLIS * 4f / 3f))).isNotNull();  //emission in the second window
 
         subscription.unsubscribe();
 
