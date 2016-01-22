@@ -47,8 +47,8 @@ public class RxAnimationTest {
     }
 
     @Test
-    public void starts() throws InterruptedException {
-        RecordingObserver<Void> o = new RecordingObserver<>();
+    public void animationStarts() throws InterruptedException {
+        RecordingObserver<Animation> o = new RecordingObserver<>();
         animation.setRepeatCount(0);
         Subscription subscription = RxAnimation.starts(animation).subscribe(o);
 
@@ -56,12 +56,12 @@ public class RxAnimationTest {
 
         startAnimation(); //first animation start
 
-        assertThat(o.takeNext()).isNull();  //emission in the first second of animation
-        o.assertNoMoreEvents();             //no more emissions during this animation
+        assertThat(o.takeNext()).isNotNull(); //emission in the first second of animation
+        o.assertNoMoreEvents();               //no more emissions during this animation
 
         startAnimation(); //second animation start
 
-        assertThat(o.takeNext()).isNull(); //emission in the first second of animation
+        assertThat(o.takeNext()).isNotNull(); //emission in the first second of animation
 
         subscription.unsubscribe();
 
@@ -71,8 +71,8 @@ public class RxAnimationTest {
 
 
     @Test
-    public void ends() {
-        RecordingObserver<Void> o = new RecordingObserver<>();
+    public void animationEnds() {
+        RecordingObserver<Animation> o = new RecordingObserver<>();
         animation.setRepeatCount(0);
         Subscription subscription = RxAnimation.ends(animation).subscribe(o);
 
@@ -80,11 +80,11 @@ public class RxAnimationTest {
 
         startAnimation(); //first animation start
 
-        o.assertNoMoreEvents();             //no emissions in the first second of animation
-        assertThat(o.takeNext()).isNull();  //emission in the second second of animation
+        o.assertNoMoreEvents();               //no emissions in the first second of animation
+        assertThat(o.takeNext()).isNotNull(); //emission in the second second of animation
 
         startAnimation(); //second animation start
-        assertThat(o.takeNext(ANIMATION_DURATION_MILLIS + 500)).isNull(); //emission in the two seconds of animation
+        assertThat(o.takeNext(ANIMATION_DURATION_MILLIS + 500)).isNotNull(); //emission in the two seconds of animation
 
         subscription.unsubscribe();
 
@@ -93,8 +93,8 @@ public class RxAnimationTest {
     }
 
     @Test
-    public void repeats() {
-        RecordingObserver<Void> o = new RecordingObserver<>();
+    public void animationRepeats() {
+        RecordingObserver<Animation> o = new RecordingObserver<>();
         animation.setRepeatCount(2);
         Subscription subscription = RxAnimation.repeats(animation).subscribe(o);
 
@@ -111,8 +111,8 @@ public class RxAnimationTest {
         //                                                  {------------- 2nd window ----------}
 
 
-        assertThat(o.takeNext((int) (ANIMATION_DURATION_MILLIS * 4f/3f))).isNull();  //emission in the first window
-        assertThat(o.takeNext((int) (ANIMATION_DURATION_MILLIS * 4f/3f))).isNull();  //emission in the second window
+        assertThat(o.takeNext((int) (ANIMATION_DURATION_MILLIS * 4f/3f))).isNotNull();  //emission in the first window
+        assertThat(o.takeNext((int) (ANIMATION_DURATION_MILLIS * 4f/3f))).isNotNull();  //emission in the second window
 
         subscription.unsubscribe();
 
