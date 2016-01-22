@@ -15,32 +15,17 @@
  */
 package com.bartoszlipinski.rxanimationbinding;
 
-final class AnimationEvent {
+import android.animation.ValueAnimator;
 
-    // Typical events
-    static final int START = 0;
-    static final int END = 1;
-    static final int REPEAT = 2;
-    static final int CANCEL = 3;
+import rx.Observable;
 
-    // Other events
-    static final int PAUSE = 4;
-    static final int RESUME = 5;
-    static final int UPDATE = 6;
+import static com.bartoszlipinski.rxanimationbinding.internal.Preconditions.checkNotNull;
 
-    private AnimationEvent() {
-        throw new AssertionError("No instances.");
+public class RxValueAnimator extends RxAnimator{
+
+    public static Observable<Void> updates(ValueAnimator animator) {
+        checkNotNull(animator, "animator == null");
+        return Observable.create(new ValueAnimatorUpdateListenerOnSubscribe(animator));
     }
 
-    static boolean isTypical(int event) {
-        switch (event) {
-            case START:
-            case END:
-            case REPEAT:
-            case CANCEL:
-                return true;
-            default:
-                return false;
-        }
-    }
 }

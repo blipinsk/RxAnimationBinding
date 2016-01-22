@@ -1,12 +1,12 @@
 /**
  * Copyright 2016 Bartosz Lipinski
- *
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,40 +23,40 @@ import rx.android.MainThreadSubscription;
 
 final class AnimationListenerOnSubscribe implements Observable.OnSubscribe<Void> {
 
-    private final Animation mAnimation;
-    private final int mEventToCallOn;
+    private final Animation animation;
+    private final int eventToCallOn;
 
     AnimationListenerOnSubscribe(Animation animation, int eventToCallOn) {
-        mAnimation = animation;
-        mEventToCallOn = eventToCallOn;
+        this.animation = animation;
+        this.eventToCallOn = eventToCallOn;
     }
 
     @Override
     public void call(final Subscriber<? super Void> subscriber) {
         final AnimationListenerWrapper listener = new AnimationListenerWrapper(this) {
             @Override
-            protected void onStart(Animation animation) {
-                if (mEventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
+            void onStart(Animation animation) {
+                if (eventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
             }
 
             @Override
-            protected void onEnd(Animation animation) {
-                if (mEventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
+            void onEnd(Animation animation) {
+                if (eventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
             }
 
             @Override
-            protected void onRepeat(Animation animation) {
-                if (mEventToCallOn == AnimationEvent.REPEAT && !subscriber.isUnsubscribed()) {
+            void onRepeat(Animation animation) {
+                if (eventToCallOn == AnimationEvent.REPEAT && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
             }
         };
 
-        mAnimation.setAnimationListener(listener);
+        animation.setAnimationListener(listener);
 
         subscriber.add(new MainThreadSubscription() {
             @Override
@@ -67,39 +67,39 @@ final class AnimationListenerOnSubscribe implements Observable.OnSubscribe<Void>
     }
 
     private static abstract class AnimationListenerWrapper implements Animation.AnimationListener {
-        AnimationListenerOnSubscribe mOnSubscribe;
+        AnimationListenerOnSubscribe onSubscribe;
 
-        public AnimationListenerWrapper(AnimationListenerOnSubscribe onSubscribe) {
-            this.mOnSubscribe = onSubscribe;
+        AnimationListenerWrapper(AnimationListenerOnSubscribe onSubscribe) {
+            this.onSubscribe = onSubscribe;
         }
 
-        protected abstract void onStart(Animation animation);
+        abstract void onStart(Animation animation);
 
-        protected abstract void onEnd(Animation animation);
+        abstract void onEnd(Animation animation);
 
-        protected abstract void onRepeat(Animation animation);
+        abstract void onRepeat(Animation animation);
 
-        public void onUnsubscribe() {
-            mOnSubscribe = null;
+        void onUnsubscribe() {
+            onSubscribe = null;
         }
 
         @Override
         public final void onAnimationStart(Animation animation) {
-            if (mOnSubscribe != null) {
+            if (onSubscribe != null) {
                 onStart(animation);
             }
         }
 
         @Override
         public final void onAnimationEnd(Animation animation) {
-            if (mOnSubscribe != null) {
+            if (onSubscribe != null) {
                 onEnd(animation);
             }
         }
 
         @Override
         public final void onAnimationRepeat(Animation animation) {
-            if (mOnSubscribe != null) {
+            if (onSubscribe != null) {
                 onRepeat(animation);
             }
         }

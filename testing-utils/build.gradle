@@ -1,0 +1,32 @@
+apply plugin: 'com.android.library'
+
+def cfg = rootProject.ext.configuration
+def libs = rootProject.ext.libraries
+def tests = rootProject.ext.tests
+
+dependencies {
+    compile "io.reactivex:rxandroid:${libs.rx_android}"
+
+    compile "com.android.support.test:runner:${tests.supportTest}"
+    compile "com.google.truth:truth:${tests.truth}"
+    compile "com.android.support.test.espresso:espresso-core:${tests.espresso}"
+}
+
+android {
+    compileSdkVersion cfg.compileVersion
+    buildToolsVersion cfg.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion cfg.minSdk
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    lintOptions {
+        //we're not uploading that to maven
+        abortOnError false
+    }
+}

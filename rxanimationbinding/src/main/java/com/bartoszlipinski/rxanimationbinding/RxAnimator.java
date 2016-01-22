@@ -16,7 +16,6 @@
 package com.bartoszlipinski.rxanimationbinding;
 
 import android.animation.Animator;
-import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.os.Build;
 
@@ -56,11 +55,6 @@ public class RxAnimator {
     public static Observable<Void> resumes(Animator animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(new AnimatorPauseListenerOnSubscribe(animator, AnimationEvent.RESUME));
-    }
-
-    public static Observable<Void> updates(ValueAnimator animator) {
-        checkNotNull(animator, "animator == null");
-        return Observable.create(new ValueAnimatorUpdateListenerOnSubscribe(animator));
     }
 
 }

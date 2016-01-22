@@ -1,1 +1,6 @@
-include ':rxanimationbinding', ':sample'
+include ':rxanimationbinding'
+
+include ':sample'
+
+include ':testing-utils'
+
