@@ -40,7 +40,7 @@ ext {
             groupId     : "com.bartoszlipinski",
             name        : "RxAnimationBinding",
             artifactRoot: "rxanimationbinding",
-            description : "RxJava binding APIs for Android's Animations",
+            description : "RxJava binding APIs for Android's animations",
             website     : "https://github.com/blipinsk/RxAnimationBinding",
             gitUrl      : "https://github.com/blipinsk/RxAnimationBinding.git",
             licenses    : ["Apache-2.0"],
