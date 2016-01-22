@@ -43,7 +43,7 @@ public class RxAnimationTest {
                 Log.d("TESTS", "animation step: " + interpolatedTime);
             }
         };
-        animation.setDuration(100);
+        animation.setDuration(1000);
     }
 
     private void startAnimation() {
@@ -56,15 +56,20 @@ public class RxAnimationTest {
     }
 
     @Test
-    public void starts() {
+    public void starts() throws InterruptedException {
         RecordingObserver<Void> o = new RecordingObserver<>();
         Subscription subscription = RxAnimation.starts(animation).subscribe(o);
         o.assertNoMoreEvents(); // No initial value.
 
         startAnimation();
+        Log.d("TESTS", "after start animation");
+
+        Thread.sleep(2000);
+        Log.d("TESTS", "after sleep");
 
         assertThat(o.takeNext()).isNull();
         o.assertNoMoreEvents();
+        Log.d("TESTS", "after check animation");
 
         startAnimation();
         assertThat(o.takeNext()).isNull();
@@ -78,11 +83,9 @@ public class RxAnimationTest {
 
     @Test
     public void ends(){
-//        RecordingObserver<Void> o = new RecordingObserver<>();
-//        Subscription subscription = RxAnimation.ends(animation).subscribe(o);
-//        o.assertNoMoreEvents(); // No initial value.
-//
-//        startAnimation();
-//        o.assertNoMoreEvents();
+    }
+
+    @Test
+    public void repeats(){
     }
 }
