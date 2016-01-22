@@ -24,7 +24,7 @@ import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
 @TargetApi(Build.VERSION_CODES.KITKAT)
-final class AnimatorPauseListenerOnSubscribe implements Observable.OnSubscribe<Void> {
+final class AnimatorPauseListenerOnSubscribe implements Observable.OnSubscribe<Animator> {
 
     private final Animator animator;
     private final int eventToCallOn;
@@ -35,20 +35,20 @@ final class AnimatorPauseListenerOnSubscribe implements Observable.OnSubscribe<V
     }
 
     @Override
-    public void call(final Subscriber<? super Void> subscriber) {
+    public void call(final Subscriber<? super Animator> subscriber) {
 
         final Animator.AnimatorPauseListener listener = new Animator.AnimatorPauseListener() {
             @Override
-            public void onAnimationPause(Animator animation) {
+            public void onAnimationPause(Animator animator) {
                 if (eventToCallOn == AnimationEvent.PAUSE && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                    subscriber.onNext(animator);
                 }
             }
 
             @Override
-            public void onAnimationResume(Animator animation) {
+            public void onAnimationResume(Animator animator) {
                 if (eventToCallOn == AnimationEvent.RESUME && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                    subscriber.onNext(animator);
                 }
             }
         };

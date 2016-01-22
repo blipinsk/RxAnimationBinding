@@ -15,6 +15,8 @@
  */
 package com.bartoszlipinski.rxanimationbinding;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.ViewPropertyAnimator;
@@ -26,33 +28,33 @@ import static com.bartoszlipinski.rxanimationbinding.internal.Preconditions.chec
 public class RxViewPropertyAnimator {
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
-    public static Observable<Void> starts(ViewPropertyAnimator animator) {
+    public static Observable<Animator> starts(ViewPropertyAnimator animator) {
         checkNotNull(animator, "animator == null");
-        return Observable.create(ViewPropertyAnimatorListenerOnSubscribe.forTypicalEvents(animator, AnimationEvent.START));
+        return Observable.create(new ViewPropertyAnimatorListenerOnSubscribe(animator, AnimationEvent.START));
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
-    public static Observable<Void> ends(ViewPropertyAnimator animator) {
+    public static Observable<Animator> ends(ViewPropertyAnimator animator) {
         checkNotNull(animator, "animator == null");
-        return Observable.create(ViewPropertyAnimatorListenerOnSubscribe.forTypicalEvents(animator, AnimationEvent.END));
+        return Observable.create(new ViewPropertyAnimatorListenerOnSubscribe(animator, AnimationEvent.END));
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
-    public static Observable<Void> cancels(ViewPropertyAnimator animator) {
+    public static Observable<Animator> cancels(ViewPropertyAnimator animator) {
         checkNotNull(animator, "animator == null");
-        return Observable.create(ViewPropertyAnimatorListenerOnSubscribe.forTypicalEvents(animator, AnimationEvent.CANCEL));
+        return Observable.create(new ViewPropertyAnimatorListenerOnSubscribe(animator, AnimationEvent.CANCEL));
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
-    public static Observable<Void> repeats(ViewPropertyAnimator animator) {
+    public static Observable<Animator> repeats(ViewPropertyAnimator animator) {
         checkNotNull(animator, "animator == null");
-        return Observable.create(ViewPropertyAnimatorListenerOnSubscribe.forTypicalEvents(animator, AnimationEvent.REPEAT));
+        return Observable.create(new ViewPropertyAnimatorListenerOnSubscribe(animator, AnimationEvent.REPEAT));
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public static Observable<Void> updates(ViewPropertyAnimator animator) {
+    public static Observable<ValueAnimator> updates(ViewPropertyAnimator animator) {
         checkNotNull(animator, "animator == null");
-        return Observable.create(ViewPropertyAnimatorListenerOnSubscribe.forUpdates(animator));
+        return Observable.create(new ViewPropertyAnimatorUpdateListenerOnSubscribe(animator));
     }
 
 }

@@ -21,7 +21,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-final class AnimatorListenerOnSubscribe implements Observable.OnSubscribe<Void> {
+final class AnimatorListenerOnSubscribe implements Observable.OnSubscribe<Animator> {
 
     private final Animator animator;
     private final int eventToCallOn;
@@ -32,33 +32,33 @@ final class AnimatorListenerOnSubscribe implements Observable.OnSubscribe<Void> 
     }
 
     @Override
-    public void call(final Subscriber<? super Void> subscriber) {
+    public void call(final Subscriber<? super Animator> subscriber) {
         final Animator.AnimatorListener listener = new Animator.AnimatorListener() {
             @Override
-            public void onAnimationStart(Animator animation) {
+            public void onAnimationStart(Animator animator) {
                 if (eventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                    subscriber.onNext(animator);
                 }
             }
 
             @Override
-            public void onAnimationEnd(Animator animation) {
+            public void onAnimationEnd(Animator animator) {
                 if (eventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                    subscriber.onNext(animator);
                 }
             }
 
             @Override
-            public void onAnimationCancel(Animator animation) {
+            public void onAnimationCancel(Animator animator) {
                 if (eventToCallOn == AnimationEvent.CANCEL && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
             }
 
             @Override
-            public void onAnimationRepeat(Animator animation) {
+            public void onAnimationRepeat(Animator animator) {
                 if (eventToCallOn == AnimationEvent.REPEAT && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                    subscriber.onNext(animator);
                 }
             }
         };

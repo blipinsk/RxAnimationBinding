@@ -21,7 +21,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-final class ValueAnimatorUpdateListenerOnSubscribe implements Observable.OnSubscribe<Void> {
+final class ValueAnimatorUpdateListenerOnSubscribe implements Observable.OnSubscribe<ValueAnimator> {
 
     private final ValueAnimator animator;
 
@@ -30,7 +30,7 @@ final class ValueAnimatorUpdateListenerOnSubscribe implements Observable.OnSubsc
     }
 
     @Override
-    public void call(final Subscriber<? super Void> subscriber) {
+    public void call(final Subscriber<? super ValueAnimator> subscriber) {
 
         final ValueAnimator.AnimatorUpdateListener listener = new ValueAnimator.AnimatorUpdateListener() {
             @Override

@@ -23,17 +23,17 @@ import static com.bartoszlipinski.rxanimationbinding.internal.Preconditions.chec
 
 public class RxAnimation {
 
-    public static Observable<Void> starts(Animation animation){
+    public static Observable<Animation> starts(Animation animation){
         checkNotNull(animation, "animation == null");
         return Observable.create(new AnimationListenerOnSubscribe(animation, AnimationEvent.START));
     }
 
-    public static Observable<Void> ends(Animation animation){
+    public static Observable<Animation> ends(Animation animation){
         checkNotNull(animation, "animation == null");
         return Observable.create(new AnimationListenerOnSubscribe(animation, AnimationEvent.END));
     }
 
-    public static Observable<Void> repeats(Animation animation){
+    public static Observable<Animation> repeats(Animation animation){
         checkNotNull(animation, "animation == null");
         return Observable.create(new AnimationListenerOnSubscribe(animation, AnimationEvent.REPEAT));
     }
