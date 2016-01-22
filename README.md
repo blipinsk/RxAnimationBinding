@@ -16,7 +16,7 @@ Base platform bindings:
 compile 'com.bartoszlipinski:rxanimationbinding:1.0.0-beta1'
 ```
 
-Contains: `RxAnimation`, `RxAnimator`, `RxValueAnimator`, `RxViewPropertyAnimator`, `RxTransition` and `RxAnimatable2`.
+Contents: `RxAnimation`, `RxAnimator`, `RxValueAnimator`, `RxViewPropertyAnimator`, `RxTransition` and `RxAnimatable2`.
 
 Ongoing development
 -------------------
