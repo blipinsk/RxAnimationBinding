@@ -23,12 +23,12 @@ import rx.android.MainThreadSubscription;
 
 final class AnimationListenerOnSubscribe implements Observable.OnSubscribe<Void> {
 
-    private final Animation mAnimation;
-    private final int mEventToCallOn;
+    private final Animation animation;
+    private final int eventToCallOn;
 
     AnimationListenerOnSubscribe(Animation animation, int eventToCallOn) {
-        mAnimation = animation;
-        mEventToCallOn = eventToCallOn;
+        this.animation = animation;
+        this.eventToCallOn = eventToCallOn;
     }
 
     @Override
@@ -36,27 +36,27 @@ final class AnimationListenerOnSubscribe implements Observable.OnSubscribe<Void>
         final AnimationListenerWrapper listener = new AnimationListenerWrapper(this) {
             @Override
             void onStart(Animation animation) {
-                if (mEventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
+                if (eventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
             }
 
             @Override
             void onEnd(Animation animation) {
-                if (mEventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
+                if (eventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
             }
 
             @Override
             void onRepeat(Animation animation) {
-                if (mEventToCallOn == AnimationEvent.REPEAT && !subscriber.isUnsubscribed()) {
+                if (eventToCallOn == AnimationEvent.REPEAT && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
             }
         };
 
-        mAnimation.setAnimationListener(listener);
+        animation.setAnimationListener(listener);
 
         subscriber.add(new MainThreadSubscription() {
             @Override
@@ -67,10 +67,10 @@ final class AnimationListenerOnSubscribe implements Observable.OnSubscribe<Void>
     }
 
     private static abstract class AnimationListenerWrapper implements Animation.AnimationListener {
-        AnimationListenerOnSubscribe mOnSubscribe;
+        AnimationListenerOnSubscribe onSubscribe;
 
         AnimationListenerWrapper(AnimationListenerOnSubscribe onSubscribe) {
-            this.mOnSubscribe = onSubscribe;
+            this.onSubscribe = onSubscribe;
         }
 
         abstract void onStart(Animation animation);
@@ -80,26 +80,26 @@ final class AnimationListenerOnSubscribe implements Observable.OnSubscribe<Void>
         abstract void onRepeat(Animation animation);
 
         void onUnsubscribe() {
-            mOnSubscribe = null;
+            onSubscribe = null;
         }
 
         @Override
         public final void onAnimationStart(Animation animation) {
-            if (mOnSubscribe != null) {
+            if (onSubscribe != null) {
                 onStart(animation);
             }
         }
 
         @Override
         public final void onAnimationEnd(Animation animation) {
-            if (mOnSubscribe != null) {
+            if (onSubscribe != null) {
                 onEnd(animation);
             }
         }
 
         @Override
         public final void onAnimationRepeat(Animation animation) {
-            if (mOnSubscribe != null) {
+            if (onSubscribe != null) {
                 onRepeat(animation);
             }
         }

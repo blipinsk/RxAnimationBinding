@@ -26,12 +26,12 @@ import rx.android.MainThreadSubscription;
 @TargetApi(Build.VERSION_CODES.KITKAT)
 final class AnimatorPauseListenerOnSubscribe implements Observable.OnSubscribe<Void> {
 
-    private final Animator mAnimator;
-    private final int mEventToCallOn;
+    private final Animator animator;
+    private final int eventToCallOn;
 
     AnimatorPauseListenerOnSubscribe(Animator animator, int eventToCallOn) {
-        mAnimator = animator;
-        mEventToCallOn = eventToCallOn;
+        this.animator = animator;
+        this.eventToCallOn = eventToCallOn;
     }
 
     @Override
@@ -40,25 +40,25 @@ final class AnimatorPauseListenerOnSubscribe implements Observable.OnSubscribe<V
         final Animator.AnimatorPauseListener listener = new Animator.AnimatorPauseListener() {
             @Override
             public void onAnimationPause(Animator animation) {
-                if (mEventToCallOn == AnimationEvent.PAUSE && !subscriber.isUnsubscribed()) {
+                if (eventToCallOn == AnimationEvent.PAUSE && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
             }
 
             @Override
             public void onAnimationResume(Animator animation) {
-                if (mEventToCallOn == AnimationEvent.RESUME && !subscriber.isUnsubscribed()) {
+                if (eventToCallOn == AnimationEvent.RESUME && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
             }
         };
 
-        mAnimator.addPauseListener(listener);
+        animator.addPauseListener(listener);
 
         subscriber.add(new MainThreadSubscription() {
             @Override
             protected void onUnsubscribe() {
-                mAnimator.removePauseListener(listener);
+                animator.removePauseListener(listener);
             }
         });
     }

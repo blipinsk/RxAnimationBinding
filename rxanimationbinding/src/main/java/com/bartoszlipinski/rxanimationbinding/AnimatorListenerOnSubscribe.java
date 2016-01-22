@@ -23,12 +23,12 @@ import rx.android.MainThreadSubscription;
 
 final class AnimatorListenerOnSubscribe implements Observable.OnSubscribe<Void> {
 
-    private final Animator mAnimator;
-    private final int mEventToCallOn;
+    private final Animator animator;
+    private final int eventToCallOn;
 
     AnimatorListenerOnSubscribe(Animator animator, int eventToCallOn) {
-        mAnimator = animator;
-        mEventToCallOn = eventToCallOn;
+        this.animator = animator;
+        this.eventToCallOn = eventToCallOn;
     }
 
     @Override
@@ -36,39 +36,39 @@ final class AnimatorListenerOnSubscribe implements Observable.OnSubscribe<Void> 
         final Animator.AnimatorListener listener = new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-                if (mEventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
+                if (eventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                if (mEventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
+                if (eventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
             }
 
             @Override
             public void onAnimationCancel(Animator animation) {
-                if (mEventToCallOn == AnimationEvent.CANCEL && !subscriber.isUnsubscribed()) {
+                if (eventToCallOn == AnimationEvent.CANCEL && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
             }
 
             @Override
             public void onAnimationRepeat(Animator animation) {
-                if (mEventToCallOn == AnimationEvent.REPEAT && !subscriber.isUnsubscribed()) {
+                if (eventToCallOn == AnimationEvent.REPEAT && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
             }
         };
 
-        mAnimator.addListener(listener);
+        animator.addListener(listener);
 
         subscriber.add(new MainThreadSubscription() {
             @Override
             protected void onUnsubscribe() {
-                mAnimator.removeListener(listener);
+                animator.removeListener(listener);
             }
         });
     }
