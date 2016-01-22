@@ -24,41 +24,41 @@ import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
 @TargetApi(Build.VERSION_CODES.KITKAT)
-final class AnimatorPauseListenerOnSubscribe implements Observable.OnSubscribe<Void> {
+final class AnimatorPauseListenerOnSubscribe implements Observable.OnSubscribe<Animator> {
 
-    private final Animator mAnimator;
-    private final int mEventToCallOn;
+    private final Animator animator;
+    private final int eventToCallOn;
 
     AnimatorPauseListenerOnSubscribe(Animator animator, int eventToCallOn) {
-        mAnimator = animator;
-        mEventToCallOn = eventToCallOn;
+        this.animator = animator;
+        this.eventToCallOn = eventToCallOn;
     }
 
     @Override
-    public void call(final Subscriber<? super Void> subscriber) {
+    public void call(final Subscriber<? super Animator> subscriber) {
 
         final Animator.AnimatorPauseListener listener = new Animator.AnimatorPauseListener() {
             @Override
-            public void onAnimationPause(Animator animation) {
-                if (mEventToCallOn == AnimationEvent.PAUSE && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+            public void onAnimationPause(Animator animator) {
+                if (eventToCallOn == AnimationEvent.PAUSE && !subscriber.isUnsubscribed()) {
+                    subscriber.onNext(animator);
                 }
             }
 
             @Override
-            public void onAnimationResume(Animator animation) {
-                if (mEventToCallOn == AnimationEvent.RESUME && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+            public void onAnimationResume(Animator animator) {
+                if (eventToCallOn == AnimationEvent.RESUME && !subscriber.isUnsubscribed()) {
+                    subscriber.onNext(animator);
                 }
             }
         };
 
-        mAnimator.addPauseListener(listener);
+        animator.addPauseListener(listener);
 
         subscriber.add(new MainThreadSubscription() {
             @Override
             protected void onUnsubscribe() {
-                mAnimator.removePauseListener(listener);
+                animator.removePauseListener(listener);
             }
         });
     }

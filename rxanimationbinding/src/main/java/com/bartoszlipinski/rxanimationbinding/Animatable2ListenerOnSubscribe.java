@@ -25,41 +25,41 @@ import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
 @TargetApi(Build.VERSION_CODES.M)
-final class Animatable2ListenerOnSubscribe implements Observable.OnSubscribe<Void> {
+final class Animatable2ListenerOnSubscribe implements Observable.OnSubscribe<Drawable> {
 
-    private final Animatable2 mAnimatable2;
-    private final int mEventToCallOn;
+    private final Animatable2 animatable2;
+    private final int eventToCallOn;
 
     Animatable2ListenerOnSubscribe(Animatable2 animatable2, int eventToCallOn) {
-        mAnimatable2 = animatable2;
-        mEventToCallOn = eventToCallOn;
+        this.animatable2 = animatable2;
+        this.eventToCallOn = eventToCallOn;
     }
 
     @Override
-    public void call(final Subscriber<? super Void> subscriber) {
+    public void call(final Subscriber<? super Drawable> subscriber) {
 
         final Animatable2.AnimationCallback callback = new Animatable2.AnimationCallback() {
             @Override
             public void onAnimationStart(Drawable drawable) {
-                if (mEventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                if (eventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
+                    subscriber.onNext(drawable);
                 }
             }
 
             @Override
             public void onAnimationEnd(Drawable drawable) {
-                if (mEventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                if (eventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
+                    subscriber.onNext(drawable);
                 }
             }
         };
 
-        mAnimatable2.registerAnimationCallback(callback);
+        animatable2.registerAnimationCallback(callback);
 
         subscriber.add(new MainThreadSubscription() {
             @Override
             protected void onUnsubscribe() {
-                mAnimatable2.unregisterAnimationCallback(callback);
+                animatable2.unregisterAnimationCallback(callback);
             }
         });
     }

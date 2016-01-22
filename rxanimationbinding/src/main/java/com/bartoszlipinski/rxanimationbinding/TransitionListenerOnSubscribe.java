@@ -24,62 +24,62 @@ import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
 @TargetApi(Build.VERSION_CODES.KITKAT)
-final class TransitionListenerOnSubscribe implements Observable.OnSubscribe<Void> {
+final class TransitionListenerOnSubscribe implements Observable.OnSubscribe<Transition> {
 
-    private final Transition mTransition;
-    private final int mEventToCallOn;
+    private final Transition transition;
+    private final int eventToCallOn;
 
     TransitionListenerOnSubscribe(Transition transition, int eventToCallOn) {
-        mTransition = transition;
-        mEventToCallOn = eventToCallOn;
+        this.transition = transition;
+        this.eventToCallOn = eventToCallOn;
     }
 
     @Override
-    public void call(final Subscriber<? super Void> subscriber) {
+    public void call(final Subscriber<? super Transition> subscriber) {
         
         final Transition.TransitionListener listener = new Transition.TransitionListener() {
             @Override
             public void onTransitionStart(Transition transition) {
-                if (mEventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                if (eventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
+                    subscriber.onNext(transition);
                 }
             }
 
             @Override
             public void onTransitionEnd(Transition transition) {
-                if (mEventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                if (eventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
+                    subscriber.onNext(transition);
                 }
             }
 
             @Override
             public void onTransitionCancel(Transition transition) {
-                if (mEventToCallOn == AnimationEvent.CANCEL && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                if (eventToCallOn == AnimationEvent.CANCEL && !subscriber.isUnsubscribed()) {
+                    subscriber.onNext(transition);
                 }
             }
 
             @Override
             public void onTransitionPause(Transition transition) {
-                if (mEventToCallOn == AnimationEvent.PAUSE && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                if (eventToCallOn == AnimationEvent.PAUSE && !subscriber.isUnsubscribed()) {
+                    subscriber.onNext(transition);
                 }
             }
 
             @Override
             public void onTransitionResume(Transition transition) {
-                if (mEventToCallOn == AnimationEvent.RESUME && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                if (eventToCallOn == AnimationEvent.RESUME && !subscriber.isUnsubscribed()) {
+                    subscriber.onNext(transition);
                 }
             }
         };
 
-        mTransition.addListener(listener);
+        transition.addListener(listener);
 
         subscriber.add(new MainThreadSubscription() {
             @Override
             protected void onUnsubscribe() {
-                mTransition.removeListener(listener);
+                transition.removeListener(listener);
             }
         });
     }

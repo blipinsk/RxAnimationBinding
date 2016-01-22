@@ -21,32 +21,32 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-final class ValueAnimatorUpdateListenerOnSubscribe implements Observable.OnSubscribe<Void> {
+final class ValueAnimatorUpdateListenerOnSubscribe implements Observable.OnSubscribe<ValueAnimator> {
 
-    private final ValueAnimator mAnimator;
+    private final ValueAnimator animator;
 
     ValueAnimatorUpdateListenerOnSubscribe(ValueAnimator animator) {
-        mAnimator = animator;
+        this.animator = animator;
     }
 
     @Override
-    public void call(final Subscriber<? super Void> subscriber) {
+    public void call(final Subscriber<? super ValueAnimator> subscriber) {
 
         final ValueAnimator.AnimatorUpdateListener listener = new ValueAnimator.AnimatorUpdateListener() {
             @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
+            public void onAnimationUpdate(ValueAnimator animator) {
                 if (!subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                    subscriber.onNext(animator);
                 }
             }
         };
 
-        mAnimator.addUpdateListener(listener);
+        animator.addUpdateListener(listener);
 
         subscriber.add(new MainThreadSubscription() {
             @Override
             protected void onUnsubscribe() {
-                mAnimator.removeUpdateListener(listener);
+                animator.removeUpdateListener(listener);
             }
         });
     }

@@ -16,8 +16,6 @@
 package com.bartoszlipinski.rxanimationbinding;
 
 import android.animation.Animator;
-import android.animation.ValueAnimator;
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.ViewPropertyAnimator;
@@ -26,172 +24,101 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-final class ViewPropertyAnimatorListenerOnSubscribe implements Observable.OnSubscribe<Void> {
+@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
+final class ViewPropertyAnimatorListenerOnSubscribe implements Observable.OnSubscribe<Animator> {
 
-    private final ViewPropertyAnimator mAnimator;
-    private final int mEventToCallOn;
+    private final ViewPropertyAnimator animator;
+    private final int eventToCallOn;
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
-    static ViewPropertyAnimatorListenerOnSubscribe forTypicalEvents(ViewPropertyAnimator animator, int eventToCallOn){
-        if (!AnimationEvent.isTypical(eventToCallOn)){
-            throw new IllegalArgumentException("forTypicalEvents method is only for typical events");
-        }
-        return new ViewPropertyAnimatorListenerOnSubscribe(animator, eventToCallOn);
+    public ViewPropertyAnimatorListenerOnSubscribe(ViewPropertyAnimator animator, int eventToCallOn) {
+        this.animator = animator;
+        this.eventToCallOn = eventToCallOn;
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    static ViewPropertyAnimatorListenerOnSubscribe forUpdates(ViewPropertyAnimator animator){
-        return new ViewPropertyAnimatorListenerOnSubscribe(animator, AnimationEvent.UPDATE);
-    }
+    public void call(final Subscriber<? super Animator> subscriber) {
+        final ViewPropertyAnimatorListenerWrapper listener = new ViewPropertyAnimatorListenerWrapper(this) {
+            @Override
+            void onStart(Animator animator) {
+                if (eventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
+                    subscriber.onNext(animator);
+                }
+            }
 
-    private ViewPropertyAnimatorListenerOnSubscribe(ViewPropertyAnimator animator, int eventToCallOn) {
-        mAnimator = animator;
-        mEventToCallOn = eventToCallOn;
-    }
+            @Override
+            void onEnd(Animator animator) {
+                if (eventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
+                    subscriber.onNext(animator);
+                }
+            }
 
-    @SuppressLint("NewApi")
-    @Override
-    public void call(final Subscriber<? super Void> subscriber) {
+            @Override
+            void onCancel(Animator animator) {
+                if (eventToCallOn == AnimationEvent.CANCEL && !subscriber.isUnsubscribed()) {
+                    subscriber.onNext(animator);
+                }
+            }
 
-        ViewPropertyAnimatorListenerWrapper listenerWrapper = null;
-        ViewPropertyAnimatorUpdateListenerWrapper updateListenerWrapper = null;
-
-        switch (mEventToCallOn) {
-            case AnimationEvent.START:
-            case AnimationEvent.END:
-            case AnimationEvent.CANCEL:
-            case AnimationEvent.REPEAT:
-                listenerWrapper = new ViewPropertyAnimatorListenerWrapper(this) {
-                    @Override
-                    void onStart(Animator animation) {
-                        if (mEventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
-                            subscriber.onNext(null);
-                        }
-                    }
-
-                    @Override
-                    void onEnd(Animator animation) {
-                        if (mEventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
-                            subscriber.onNext(null);
-                        }
-                    }
-
-                    @Override
-                    void onCancel(Animator animation) {
-                        if (mEventToCallOn == AnimationEvent.CANCEL && !subscriber.isUnsubscribed()) {
-                            subscriber.onNext(null);
-                        }
-                    }
-
-                    @Override
-                    void onRepeat(Animator animation) {
-                        if (mEventToCallOn == AnimationEvent.REPEAT && !subscriber.isUnsubscribed()) {
-                            subscriber.onNext(null);
-                        }
-                    }
-                };
-                break;
-            case AnimationEvent.UPDATE:
-                updateListenerWrapper = new ViewPropertyAnimatorUpdateListenerWrapper(this) {
-                    @Override
-                    void onUpdate(ValueAnimator animation) {
-                        if (!subscriber.isUnsubscribed()) {
-                            subscriber.onNext(null);
-                        }
-                    }
-                };
-                break;
-        }
-
-        final ViewPropertyAnimatorListenerWrapper listener = listenerWrapper;
-        if (listener != null) {
-            mAnimator.setListener(listener);
-        }
-
-        final ViewPropertyAnimatorUpdateListenerWrapper updateListener = updateListenerWrapper;
-        if (updateListener != null) {
-            mAnimator.setUpdateListener(updateListener);
-        }
+            @Override
+            void onRepeat(Animator animator) {
+                if (eventToCallOn == AnimationEvent.REPEAT && !subscriber.isUnsubscribed()) {
+                    subscriber.onNext(animator);
+                }
+            }
+        };
+        animator.setListener(listener);
 
         subscriber.add(new MainThreadSubscription() {
             @Override
             protected void onUnsubscribe() {
-                if (listener != null) {
-                    listener.onUnsubscribe();
-                }
-                if (updateListener != null) {
-                    updateListener.onUnsubscribe();
-                }
+                listener.onUnsubscribe();
             }
         });
     }
 
     private static abstract class ViewPropertyAnimatorListenerWrapper implements Animator.AnimatorListener {
-        ViewPropertyAnimatorListenerOnSubscribe mOnSubscribe;
+        ViewPropertyAnimatorListenerOnSubscribe onSubscribe;
 
         ViewPropertyAnimatorListenerWrapper(ViewPropertyAnimatorListenerOnSubscribe onSubscribe) {
-            this.mOnSubscribe = onSubscribe;
+            this.onSubscribe = onSubscribe;
         }
 
         void onUnsubscribe() {
-            mOnSubscribe = null;
+            onSubscribe = null;
         }
 
-        abstract void onStart(Animator animation);
+        abstract void onStart(Animator animator);
 
-        abstract void onEnd(Animator animation);
+        abstract void onEnd(Animator animator);
 
-        abstract void onCancel(Animator animation);
+        abstract void onCancel(Animator animator);
 
-        abstract void onRepeat(Animator animation);
+        abstract void onRepeat(Animator animator);
 
         @Override
-        public void onAnimationStart(Animator animation) {
-            if (mOnSubscribe != null) {
-                onStart(animation);
+        public void onAnimationStart(Animator animator) {
+            if (onSubscribe != null) {
+                onStart(animator);
             }
         }
 
         @Override
-        public void onAnimationEnd(Animator animation) {
-            if (mOnSubscribe != null) {
-                onEnd(animation);
+        public void onAnimationEnd(Animator animator) {
+            if (onSubscribe != null) {
+                onEnd(animator);
             }
         }
 
         @Override
-        public void onAnimationCancel(Animator animation) {
-            if (mOnSubscribe != null) {
-                onCancel(animation);
+        public void onAnimationCancel(Animator animator) {
+            if (onSubscribe != null) {
+                onCancel(animator);
             }
         }
 
         @Override
-        public void onAnimationRepeat(Animator animation) {
-            if (mOnSubscribe != null) {
-                onRepeat(animation);
-            }
-        }
-    }
-
-
-    private static abstract class ViewPropertyAnimatorUpdateListenerWrapper implements ValueAnimator.AnimatorUpdateListener {
-        ViewPropertyAnimatorListenerOnSubscribe mOnSubscribe;
-
-        ViewPropertyAnimatorUpdateListenerWrapper(ViewPropertyAnimatorListenerOnSubscribe onSubscribe) {
-            this.mOnSubscribe = onSubscribe;
-        }
-
-        void onUnsubscribe() {
-            mOnSubscribe = null;
-        }
-
-        abstract void onUpdate(ValueAnimator animation);
-
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            if (mOnSubscribe != null) {
-                onUpdate(animation);
+        public void onAnimationRepeat(Animator animator) {
+            if (onSubscribe != null) {
+                onRepeat(animator);
             }
         }
     }

@@ -21,54 +21,54 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.MainThreadSubscription;
 
-final class AnimatorListenerOnSubscribe implements Observable.OnSubscribe<Void> {
+final class AnimatorListenerOnSubscribe implements Observable.OnSubscribe<Animator> {
 
-    private final Animator mAnimator;
-    private final int mEventToCallOn;
+    private final Animator animator;
+    private final int eventToCallOn;
 
     AnimatorListenerOnSubscribe(Animator animator, int eventToCallOn) {
-        mAnimator = animator;
-        mEventToCallOn = eventToCallOn;
+        this.animator = animator;
+        this.eventToCallOn = eventToCallOn;
     }
 
     @Override
-    public void call(final Subscriber<? super Void> subscriber) {
+    public void call(final Subscriber<? super Animator> subscriber) {
         final Animator.AnimatorListener listener = new Animator.AnimatorListener() {
             @Override
-            public void onAnimationStart(Animator animation) {
-                if (mEventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
+            public void onAnimationStart(Animator animator) {
+                if (eventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
+                    subscriber.onNext(animator);
+                }
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                if (eventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
+                    subscriber.onNext(animator);
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+                if (eventToCallOn == AnimationEvent.CANCEL && !subscriber.isUnsubscribed()) {
                     subscriber.onNext(null);
                 }
             }
 
             @Override
-            public void onAnimationEnd(Animator animation) {
-                if (mEventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
-                }
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-                if (mEventToCallOn == AnimationEvent.CANCEL && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
-                }
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-                if (mEventToCallOn == AnimationEvent.REPEAT && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+            public void onAnimationRepeat(Animator animator) {
+                if (eventToCallOn == AnimationEvent.REPEAT && !subscriber.isUnsubscribed()) {
+                    subscriber.onNext(animator);
                 }
             }
         };
 
-        mAnimator.addListener(listener);
+        animator.addListener(listener);
 
         subscriber.add(new MainThreadSubscription() {
             @Override
             protected void onUnsubscribe() {
-                mAnimator.removeListener(listener);
+                animator.removeListener(listener);
             }
         });
     }

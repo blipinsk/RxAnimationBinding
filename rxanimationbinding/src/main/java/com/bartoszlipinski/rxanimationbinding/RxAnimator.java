@@ -16,7 +16,6 @@
 package com.bartoszlipinski.rxanimationbinding;
 
 import android.animation.Animator;
-import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.os.Build;
 
@@ -26,41 +25,36 @@ import static com.bartoszlipinski.rxanimationbinding.internal.Preconditions.chec
 
 public class RxAnimator {
 
-    public static Observable<Void> starts(Animator animator) {
+    public static Observable<Animator> starts(Animator animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(new AnimatorListenerOnSubscribe(animator, AnimationEvent.START));
     }
 
-    public static Observable<Void> ends(Animator animator) {
+    public static Observable<Animator> ends(Animator animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(new AnimatorListenerOnSubscribe(animator, AnimationEvent.END));
     }
 
-    public static Observable<Void> cancels(Animator animator) {
+    public static Observable<Animator> cancels(Animator animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(new AnimatorListenerOnSubscribe(animator, AnimationEvent.CANCEL));
     }
 
-    public static Observable<Void> repeats(Animator animator) {
+    public static Observable<Animator> repeats(Animator animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(new AnimatorListenerOnSubscribe(animator, AnimationEvent.REPEAT));
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public static Observable<Void> pauses(Animator animator) {
+    public static Observable<Animator> pauses(Animator animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(new AnimatorPauseListenerOnSubscribe(animator, AnimationEvent.PAUSE));
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public static Observable<Void> resumes(Animator animator) {
+    public static Observable<Animator> resumes(Animator animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(new AnimatorPauseListenerOnSubscribe(animator, AnimationEvent.RESUME));
-    }
-
-    public static Observable<Void> updates(ValueAnimator animator) {
-        checkNotNull(animator, "animator == null");
-        return Observable.create(new ValueAnimatorUpdateListenerOnSubscribe(animator));
     }
 
 }

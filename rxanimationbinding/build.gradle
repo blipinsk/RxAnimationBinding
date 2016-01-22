@@ -1,14 +1,10 @@
-buildscript {
-    dependencies {
-        classpath rootProject.ext.androidPlugin
-    }
-}
-
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 def cfg = rootProject.ext.configuration
 def libs = rootProject.ext.libraries
 def tests = rootProject.ext.tests
+def bintrayCfg = rootProject.ext.bintrayConfig
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -49,6 +45,17 @@ android {
         exclude 'META-INF/maven/com.google.guava/guava/pom.properties'
         exclude 'META-INF/maven/com.google.guava/guava/pom.xml'
     }
+}
+
+publish {
+    artifactId = bintrayCfg.artifactRoot
+    userOrg = bintrayCfg.userOrg
+    groupId = bintrayCfg.groupId
+    uploadName = bintrayCfg.name
+    publishVersion = cfg.versionName
+    desc = bintrayCfg.description
+    website = bintrayCfg.website
+    licences = bintrayCfg.licences
 }
 
 
