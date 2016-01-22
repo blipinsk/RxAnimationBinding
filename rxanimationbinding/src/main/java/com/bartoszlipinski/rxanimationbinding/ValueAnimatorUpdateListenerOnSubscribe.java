@@ -34,9 +34,9 @@ final class ValueAnimatorUpdateListenerOnSubscribe implements Observable.OnSubsc
 
         final ValueAnimator.AnimatorUpdateListener listener = new ValueAnimator.AnimatorUpdateListener() {
             @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
+            public void onAnimationUpdate(ValueAnimator animator) {
                 if (!subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                    subscriber.onNext(animator);
                 }
             }
         };
