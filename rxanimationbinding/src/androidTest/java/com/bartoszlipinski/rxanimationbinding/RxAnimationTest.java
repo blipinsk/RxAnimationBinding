@@ -5,7 +5,6 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.widget.FrameLayout;
 
 import org.junit.Before;
@@ -34,11 +33,7 @@ public class RxAnimationTest {
     public void setUp() {
         SampleViewTestActivity activity = activityRule.getActivity();
         parent = activity.parent;
-        animation = new Animation() {
-            @Override
-            protected void applyTransformation(float interpolatedTime, Transformation t) {
-            }
-        };
+        animation = new Animation() {};
         animation.setDuration(ANIMATION_DURATION_MILLIS);
     }
 

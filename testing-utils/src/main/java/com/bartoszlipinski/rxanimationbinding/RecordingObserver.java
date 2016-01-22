@@ -27,7 +27,7 @@ import rx.Observer;
 import static com.google.common.truth.Truth.assertThat;
 
 /**
- * This class was introduced as a part of Jake Wharton's RxBinding library.
+ * This class is based on RecordingObserver from Jake Wharton's RxBinding library.
  * All credits for it should go to him and everyone else who contributed to it.
  */
 public final class RecordingObserver<T> implements Observer<T> {
