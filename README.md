@@ -18,11 +18,19 @@ compile 'com.bartoszlipinski:rxanimationbinding:1.0.0-beta1'
 
 Contains: `RxAnimation`, `RxAnimator`, `RxValueAnimator`, `RxViewPropertyAnimator`, `RxTransition` and `RxAnimatable2`.
 
+Ongoing development
+-------------------
+
+The published version (`1.0.0-beta1`) is a pre-release. When I finish writing tests, I will publish a solid `1.0.0` release.
+  
+Apart from that I'm working on bindings for `animators` included in the `support-v4`. Comming soon.
 
 Credits
 -------
 This library has been both inspired and (let’s not lie to ourselves) heavily influenced by Jake Wharton’s RxBinding.
+
 Few classes come directly from the library (I hope I marked them all). All credits for those goes to Jake and all other contributors of RxBinding.
+
 Thanks!
 
 License
