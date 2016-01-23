@@ -51,7 +51,7 @@ final class AnimatorListenerOnSubscribe implements Observable.OnSubscribe<Animat
             @Override
             public void onAnimationCancel(Animator animator) {
                 if (eventToCallOn == AnimationEvent.CANCEL && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                    subscriber.onNext(animator);
                 }
             }
 

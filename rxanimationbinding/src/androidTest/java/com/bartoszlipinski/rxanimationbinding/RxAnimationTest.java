@@ -70,7 +70,6 @@ public class RxAnimationTest {
         o.assertNoMoreEvents();             //no more emissions after unsubscribe
     }
 
-
     @Test
     public void testAnimationEnds() throws Exception {
         RecordingObserver<Animation> o = new RecordingObserver<>();
