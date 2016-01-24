@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="rounded_corner">2dp</dimen>
+
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="spacing_normal">16dp</dimen>
+    <dimen name="spacing_large">24dp</dimen>
+    <dimen name="spacing_xlarge">48dp</dimen>
+
+    <dimen name="size_small">36dp</dimen>
+    <dimen name="size_normal">48dp</dimen>
+    <dimen name="size_large">64dp</dimen>
+    <dimen name="size_xlarge">128dp</dimen>
+    <dimen name="size_xxlarge">256dp</dimen>
+
+    <dimen name="emission_circle_size">20dp</dimen>
+</resources>

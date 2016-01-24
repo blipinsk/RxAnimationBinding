@@ -1,10 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/midnight_blue"
+              android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="sample" />
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:paddingBottom="@dimen/spacing_small"
+        android:paddingTop="@dimen/spacing_large"
+        android:text="@string/app_name"
+        android:textColor="@color/clouds"
+        android:textSize="32sp"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/animated"
+                android:layout_width="@dimen/size_xlarge"
+                android:layout_height="@dimen/size_xxlarge"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/spacing_xlarge"
+                android:layout_marginTop="@dimen/spacing_xlarge"
+                android:background="@drawable/rounded_background_white"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/emission_circle_size"
+                android:paddingRight="@dimen/emission_circle_size">
+
+                <TextView
+                    android:id="@+id/emission_start"
+                    style="@style/EmissionLightView"
+                    android:text="s"/>
+
+                <TextView
+                    android:id="@+id/emission_end"
+                    style="@style/EmissionLightView"
+                    android:text="e"/>
+
+                <TextView
+                    android:id="@+id/emission_cancel"
+                    style="@style/EmissionLightView"
+                    android:text="c"/>
+
+                <TextView
+                    android:id="@+id/emission_repeat"
+                    style="@style/EmissionLightView"
+                    android:text="r"/>
+
+                <TextView
+                    android:id="@+id/emission_pause"
+                    style="@style/EmissionLightView"
+                    android:text="p"/>
+
+                <TextView
+                    android:id="@+id/emission_resume"
+                    style="@style/EmissionLightView"
+                    android:text="r"/>
+
+                <TextView
+                    android:id="@+id/emission_update"
+                    style="@style/EmissionLightView"
+                    android:text="u"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/spacing_small">
+
+                <Button
+                    android:id="@+id/button_start_cancel"
+                    style="@style/AlmostMaterialFlatButton"
+                    android:text="@string/start"/>
+
+                <Button
+                    android:id="@+id/button_pause_resume"
+                    style="@style/AlmostMaterialFlatButton"
+                    android:text="@string/pause"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>
