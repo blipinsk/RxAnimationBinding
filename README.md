@@ -13,7 +13,7 @@ Usage
 Base platform bindings:
 
 ```groovy
-compile 'com.bartoszlipinski:rxanimationbinding:1.0.0-beta1'
+compile 'com.bartoszlipinski:rxanimationbinding:1.0.0-beta2'
 ```
 
 Contents: `RxAnimation`, `RxAnimator`, `RxValueAnimator`, `RxViewPropertyAnimator`, `RxTransition` and `RxAnimatable2`.
@@ -21,7 +21,7 @@ Contents: `RxAnimation`, `RxAnimator`, `RxValueAnimator`, `RxViewPropertyAnimato
 Ongoing development
 -------------------
 
-The published version (`1.0.0-beta1`) is a pre-release. When I finish writing tests, I will publish a solid `1.0.0` release.
+The published version (`1.0.0-beta2`) is a pre-release. When I finish writing tests, I will publish a solid `1.0.0` release.
   
 Apart from that I'm working on bindings for `animators` included in the `support-v4`. Comming soon.
 
