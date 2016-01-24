@@ -21,10 +21,9 @@ import android.transition.Transition;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.MainThreadSubscription;
 
 @TargetApi(Build.VERSION_CODES.KITKAT)
-final class TransitionListenerOnSubscribe implements Observable.OnSubscribe<Void> {
+final class TransitionListenerOnSubscribe implements Observable.OnSubscribe<Transition> {
 
     private final Transition transition;
     private final int eventToCallOn;
@@ -35,48 +34,48 @@ final class TransitionListenerOnSubscribe implements Observable.OnSubscribe<Void
     }
 
     @Override
-    public void call(final Subscriber<? super Void> subscriber) {
+    public void call(final Subscriber<? super Transition> subscriber) {
         
         final Transition.TransitionListener listener = new Transition.TransitionListener() {
             @Override
             public void onTransitionStart(Transition transition) {
                 if (eventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                    subscriber.onNext(transition);
                 }
             }
 
             @Override
             public void onTransitionEnd(Transition transition) {
                 if (eventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                    subscriber.onNext(transition);
                 }
             }
 
             @Override
             public void onTransitionCancel(Transition transition) {
                 if (eventToCallOn == AnimationEvent.CANCEL && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                    subscriber.onNext(transition);
                 }
             }
 
             @Override
             public void onTransitionPause(Transition transition) {
                 if (eventToCallOn == AnimationEvent.PAUSE && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                    subscriber.onNext(transition);
                 }
             }
 
             @Override
             public void onTransitionResume(Transition transition) {
                 if (eventToCallOn == AnimationEvent.RESUME && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                    subscriber.onNext(transition);
                 }
             }
         };
 
         transition.addListener(listener);
 
-        subscriber.add(new MainThreadSubscription() {
+        subscriber.add(new OnUnsubscribedCallback() {
             @Override
             protected void onUnsubscribe() {
                 transition.removeListener(listener);

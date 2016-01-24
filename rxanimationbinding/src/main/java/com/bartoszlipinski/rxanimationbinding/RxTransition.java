@@ -26,27 +26,27 @@ import static com.bartoszlipinski.rxanimationbinding.internal.Preconditions.chec
 @TargetApi(Build.VERSION_CODES.KITKAT)
 public class RxTransition {
 
-    public static Observable<Void> starts(Transition transition) {
+    public static Observable<Transition> starts(Transition transition) {
         checkNotNull(transition, "transition == null");
         return Observable.create(new TransitionListenerOnSubscribe(transition, AnimationEvent.START));
     }
 
-    public static Observable<Void> ends(Transition transition) {
+    public static Observable<Transition> ends(Transition transition) {
         checkNotNull(transition, "transition == null");
         return Observable.create(new TransitionListenerOnSubscribe(transition, AnimationEvent.END));
     }
 
-    public static Observable<Void> cancels(Transition transition) {
+    public static Observable<Transition> cancels(Transition transition) {
         checkNotNull(transition, "transition == null");
         return Observable.create(new TransitionListenerOnSubscribe(transition, AnimationEvent.CANCEL));
     }
 
-    public static Observable<Void> pauses(Transition transition) {
+    public static Observable<Transition> pauses(Transition transition) {
         checkNotNull(transition, "transition == null");
         return Observable.create(new TransitionListenerOnSubscribe(transition, AnimationEvent.PAUSE));
     }
 
-    public static Observable<Void> resumes(Transition transition) {
+    public static Observable<Transition> resumes(Transition transition) {
         checkNotNull(transition, "transition == null");
         return Observable.create(new TransitionListenerOnSubscribe(transition, AnimationEvent.RESUME));
     }

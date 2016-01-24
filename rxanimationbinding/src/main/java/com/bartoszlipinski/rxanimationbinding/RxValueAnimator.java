@@ -23,7 +23,7 @@ import static com.bartoszlipinski.rxanimationbinding.internal.Preconditions.chec
 
 public class RxValueAnimator extends RxAnimator{
 
-    public static Observable<Void> updates(ValueAnimator animator) {
+    public static Observable<ValueAnimator> updates(ValueAnimator animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(new ValueAnimatorUpdateListenerOnSubscribe(animator));
     }

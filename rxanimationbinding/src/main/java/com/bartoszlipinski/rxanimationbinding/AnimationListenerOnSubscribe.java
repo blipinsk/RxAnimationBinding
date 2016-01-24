@@ -19,9 +19,8 @@ import android.view.animation.Animation;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.MainThreadSubscription;
 
-final class AnimationListenerOnSubscribe implements Observable.OnSubscribe<Void> {
+final class AnimationListenerOnSubscribe implements Observable.OnSubscribe<Animation> {
 
     private final Animation animation;
     private final int eventToCallOn;
@@ -32,33 +31,33 @@ final class AnimationListenerOnSubscribe implements Observable.OnSubscribe<Void>
     }
 
     @Override
-    public void call(final Subscriber<? super Void> subscriber) {
+    public void call(final Subscriber<? super Animation> subscriber) {
         final AnimationListenerWrapper listener = new AnimationListenerWrapper(this) {
             @Override
             void onStart(Animation animation) {
                 if (eventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                    subscriber.onNext(animation);
                 }
             }
 
             @Override
             void onEnd(Animation animation) {
                 if (eventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                    subscriber.onNext(animation);
                 }
             }
 
             @Override
             void onRepeat(Animation animation) {
                 if (eventToCallOn == AnimationEvent.REPEAT && !subscriber.isUnsubscribed()) {
-                    subscriber.onNext(null);
+                    subscriber.onNext(animation);
                 }
             }
         };
 
         animation.setAnimationListener(listener);
 
-        subscriber.add(new MainThreadSubscription() {
+        subscriber.add(new OnUnsubscribedCallback() {
             @Override
             protected void onUnsubscribe() {
                 listener.onUnsubscribe();

@@ -17,6 +17,7 @@ package com.bartoszlipinski.rxanimationbinding;
 
 import android.annotation.TargetApi;
 import android.graphics.drawable.Animatable2;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 
 import rx.Observable;
@@ -27,13 +28,13 @@ import static com.bartoszlipinski.rxanimationbinding.internal.Preconditions.chec
 public class RxAnimatable2 {
 
     @TargetApi(Build.VERSION_CODES.M)
-    public static Observable<Void> starts(Animatable2 animatable2){
+    public static Observable<Drawable> starts(Animatable2 animatable2){
         checkNotNull(animatable2, "animatable2 == null");
         return Observable.create(new Animatable2ListenerOnSubscribe(animatable2, AnimationEvent.START));
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    public static Observable<Void> ends(Animatable2 animatable2){
+    public static Observable<Drawable> ends(Animatable2 animatable2){
         checkNotNull(animatable2, "animatable2 == null");
         return Observable.create(new Animatable2ListenerOnSubscribe(animatable2, AnimationEvent.END));
     }
