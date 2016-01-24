@@ -21,7 +21,6 @@ import android.transition.Transition;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.MainThreadSubscription;
 
 @TargetApi(Build.VERSION_CODES.KITKAT)
 final class TransitionListenerOnSubscribe implements Observable.OnSubscribe<Transition> {
@@ -76,7 +75,7 @@ final class TransitionListenerOnSubscribe implements Observable.OnSubscribe<Tran
 
         transition.addListener(listener);
 
-        subscriber.add(new MainThreadSubscription() {
+        subscriber.add(new OnUnsubscribedCallback() {
             @Override
             protected void onUnsubscribe() {
                 transition.removeListener(listener);

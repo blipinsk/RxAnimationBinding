@@ -21,7 +21,6 @@ import android.os.Build;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.MainThreadSubscription;
 
 @TargetApi(Build.VERSION_CODES.KITKAT)
 final class AnimatorPauseListenerOnSubscribe implements Observable.OnSubscribe<Animator> {
@@ -55,7 +54,7 @@ final class AnimatorPauseListenerOnSubscribe implements Observable.OnSubscribe<A
 
         animator.addPauseListener(listener);
 
-        subscriber.add(new MainThreadSubscription() {
+        subscriber.add(new OnUnsubscribedCallback() {
             @Override
             protected void onUnsubscribe() {
                 animator.removePauseListener(listener);

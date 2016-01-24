@@ -22,7 +22,6 @@ import android.view.ViewPropertyAnimator;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.MainThreadSubscription;
 
 @TargetApi(Build.VERSION_CODES.KITKAT)
 final class ViewPropertyAnimatorUpdateListenerOnSubscribe implements Observable.OnSubscribe<ValueAnimator> {
@@ -46,7 +45,7 @@ final class ViewPropertyAnimatorUpdateListenerOnSubscribe implements Observable.
 
         animator.setUpdateListener(updateListener);
 
-        subscriber.add(new MainThreadSubscription() {
+        subscriber.add(new OnUnsubscribedCallback() {
             @Override
             protected void onUnsubscribe() {
                 updateListener.onUnsubscribe();

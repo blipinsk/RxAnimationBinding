@@ -22,7 +22,6 @@ import android.view.ViewPropertyAnimator;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.MainThreadSubscription;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
 final class ViewPropertyAnimatorListenerOnSubscribe implements Observable.OnSubscribe<Animator> {
@@ -67,7 +66,7 @@ final class ViewPropertyAnimatorListenerOnSubscribe implements Observable.OnSubs
         };
         animator.setListener(listener);
 
-        subscriber.add(new MainThreadSubscription() {
+        subscriber.add(new OnUnsubscribedCallback() {
             @Override
             protected void onUnsubscribe() {
                 listener.onUnsubscribe();

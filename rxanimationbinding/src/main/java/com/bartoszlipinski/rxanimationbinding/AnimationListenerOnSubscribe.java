@@ -19,7 +19,6 @@ import android.view.animation.Animation;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.MainThreadSubscription;
 
 final class AnimationListenerOnSubscribe implements Observable.OnSubscribe<Animation> {
 
@@ -58,7 +57,7 @@ final class AnimationListenerOnSubscribe implements Observable.OnSubscribe<Anima
 
         animation.setAnimationListener(listener);
 
-        subscriber.add(new MainThreadSubscription() {
+        subscriber.add(new OnUnsubscribedCallback() {
             @Override
             protected void onUnsubscribe() {
                 listener.onUnsubscribe();

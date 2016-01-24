@@ -22,7 +22,6 @@ import android.os.Build;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.MainThreadSubscription;
 
 @TargetApi(Build.VERSION_CODES.M)
 final class Animatable2ListenerOnSubscribe implements Observable.OnSubscribe<Drawable> {
@@ -56,7 +55,7 @@ final class Animatable2ListenerOnSubscribe implements Observable.OnSubscribe<Dra
 
         animatable2.registerAnimationCallback(callback);
 
-        subscriber.add(new MainThreadSubscription() {
+        subscriber.add(new OnUnsubscribedCallback() {
             @Override
             protected void onUnsubscribe() {
                 animatable2.unregisterAnimationCallback(callback);

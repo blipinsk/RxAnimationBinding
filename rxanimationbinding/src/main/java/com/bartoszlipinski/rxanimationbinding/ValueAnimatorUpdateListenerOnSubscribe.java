@@ -19,7 +19,6 @@ import android.animation.ValueAnimator;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.MainThreadSubscription;
 
 final class ValueAnimatorUpdateListenerOnSubscribe implements Observable.OnSubscribe<ValueAnimator> {
 
@@ -43,7 +42,7 @@ final class ValueAnimatorUpdateListenerOnSubscribe implements Observable.OnSubsc
 
         animator.addUpdateListener(listener);
 
-        subscriber.add(new MainThreadSubscription() {
+        subscriber.add(new OnUnsubscribedCallback() {
             @Override
             protected void onUnsubscribe() {
                 animator.removeUpdateListener(listener);
