@@ -23,7 +23,7 @@ Contents: `RxAnimation`, `RxAnimator`, `RxValueAnimator`, `RxViewPropertyAnimato
 Ongoing development
 -------------------
   
-Currently I'm working on bindings for `animators` included in the `support-v4`. Comming soon.
+Currently I'm working on bindings for `animators` included in the `support-v4`. Coming soon.
 
 Credits
 -------
