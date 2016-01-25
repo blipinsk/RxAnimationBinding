@@ -20,6 +20,32 @@ Contents: `RxAnimation`, `RxAnimator`, `RxValueAnimator`, `RxViewPropertyAnimato
 
 *For a working implementation of this library see the `sample/` folder.*
 
+Simple example:
+--------------
+
+        ValueAnimator animator = ValueAnimator.ofInt(4, 8, 15, 16, 23, 42);
+        animator.setDuration(108);
+        animator.setRepeatCount(ValueAnimator.INFINITE);
+
+        RxValueAnimator.repeats(animator)
+                .subscribe(new Action1<Animator>() {
+                    @Override
+                    public void call(Animator animator) {
+                        // here are your Animator REPEAT event emissions
+                        pressTheExecuteButton();
+                    }
+                });
+        RxValueAnimator.ends(animator)
+                .subscribe(new Action1<Animator>() {
+                    @Override
+                    public void call(Animator animator) {
+                        // here are your Animator END event emissions
+                        systemFailure();
+                    }
+                });
+                
+**REMEMBER TO UNSUBSCRIBE YOUR SUBSCRIPTIONS WHEN YOU'RE DONE WITH THEM!**
+
 Ongoing development
 -------------------
   
