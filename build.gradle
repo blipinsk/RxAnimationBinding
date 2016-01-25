@@ -75,7 +75,7 @@ subprojects {
                     project {
                         name project.name
                         artifactId project.name
-                        packaging project.name == 'aar'
+                        packaging 'aar'
                         description bintrayConfig.description
                         url bintrayConfig.website
                         version configuration.versionName
