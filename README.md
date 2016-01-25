@@ -35,11 +35,11 @@ Simple example:
                         pressTheExecuteButton();
                     }
                 });
-        RxValueAnimator.ends(animator)
+        RxValueAnimator.cancels(animator)
                 .subscribe(new Action1<Animator>() {
                     @Override
                     public void call(Animator animator) {
-                        // here are your Animator END event emissions
+                        // here are your Animator CANCEL event emissions
                         systemFailure();
                     }
                 });
