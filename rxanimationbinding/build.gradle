@@ -16,7 +16,6 @@ dependencies {
     androidTestCompile "com.android.support.test:rules:${tests.supportTest}"
     androidTestCompile "junit:junit:${tests.junit}"
     androidTestCompile "com.google.truth:truth:${tests.truth}"
-    compile 'com.android.support:appcompat-v7:23.1.1'
 }
 
 android {
