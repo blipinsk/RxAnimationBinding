@@ -28,35 +28,35 @@ Simple examples
 
  1. `ViewPropertyAnimator`
           
-    ViewPropertyAnimator animator = yourView.animate().scaleX(1.3f);
-    RxViewPropertyAnimator.updates(animator)
-            .subscribe(new Action1<ValueAnimator>() {
-                @Override
-                public void call(ValueAnimator valueAnimator) {
-                    //react to an update
-                }
-            });  
+        ViewPropertyAnimator animator = yourView.animate().scaleX(1.3f);
+        RxViewPropertyAnimator.updates(animator)
+                .subscribe(new Action1<ValueAnimator>() {
+                    @Override
+                    public void call(ValueAnimator valueAnimator) {
+                        //react to an update
+                    }
+                });  
 
  2. `ValueAnimator`
 
-    ValueAnimator animator = ValueAnimator.ofInt(4, 8, 15, 16, 23, 42);
-    animator.setDuration(108);
-    animator.setRepeatCount(ValueAnimator.INFINITE);
-
-    RxValueAnimator.repeats(animator)
-            .subscribe(new Action1<Animator>() {
-                @Override
-                public void call(Animator animator) {
-                    pressTheExecuteButton();
-                }
-            });
-    RxValueAnimator.cancels(animator)
-            .subscribe(new Action1<Animator>() {
-                @Override
-                public void call(Animator animator) {
-                    systemFailure();
-                }
-            });
+        ValueAnimator animator = ValueAnimator.ofInt(4, 8, 15, 16, 23, 42);
+        animator.setDuration(108);
+        animator.setRepeatCount(ValueAnimator.INFINITE);
+    
+        RxValueAnimator.repeats(animator)
+                .subscribe(new Action1<Animator>() {
+                    @Override
+                    public void call(Animator animator) {
+                        pressTheExecuteButton();
+                    }
+                });
+        RxValueAnimator.cancels(animator)
+                .subscribe(new Action1<Animator>() {
+                    @Override
+                    public void call(Animator animator) {
+                        systemFailure();
+                    }
+                });
                 
 
 Ongoing development
