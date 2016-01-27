@@ -26,9 +26,10 @@ Contents: `RxAnimation`, `RxAnimator`, `RxValueAnimator`, `RxViewPropertyAnimato
 Simple examples
 ---------------
 
- 1. `ViewPropertyAnimator`
+ 1. **`ViewPropertyAnimator`**
           
         ViewPropertyAnimator animator = yourView.animate().scaleX(1.3f);
+        
         RxViewPropertyAnimator.updates(animator)
                 .subscribe(new Action1<ValueAnimator>() {
                     @Override
@@ -37,7 +38,7 @@ Simple examples
                     }
                 });  
 
- 2. `ValueAnimator`
+ 2. **`ValueAnimator`** 
 
         ValueAnimator animator = ValueAnimator.ofInt(4, 8, 15, 16, 23, 42);
         animator.setDuration(108);
