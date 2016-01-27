@@ -67,9 +67,9 @@ Currently I'm working on bindings for `animators` included in the `support-v4`. 
 
 Credits
 -------
-This library has been both inspired and (let’s not lie to ourselves) heavily influenced by Jake Wharton’s RxBinding.
+This library has been both inspired and (let’s not lie to ourselves) heavily influenced by [Jake Wharton’s](https://github.com/JakeWharton) [RxBinding](https://github.com/JakeWharton/RxBinding).
 
-Few classes come directly from the library (I hope I marked them all). All credits for those goes to Jake and all other contributors of RxBinding.
+Few classes come directly from the library (I hope I marked them all). All credits for those go to Jake and all other contributors of RxBinding.
 
 Thanks!
 
