@@ -4,6 +4,7 @@ RxAnimationBinding
 [![License](https://img.shields.io/github/license/blipinsk/RxAnimationBinding.svg?style=flat)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Maven Central](https://img.shields.io/maven-central/v/com.bartoszlipinski/rxanimationbinding.svg)](http://gradleplease.appspot.com/#rxanimationbinding)
 [![Bintray](https://img.shields.io/bintray/v/blipinsk/maven/RxAnimationBinding.svg)](https://bintray.com/blipinsk/maven/RxAnimationBinding/_latestVersion)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-RxAnimationBinding-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/3069)
 
 RxJava binding APIs for Android's animations
 
