@@ -21,7 +21,9 @@ Contents: `RxAnimation`, `RxAnimator`, `RxValueAnimator`, `RxViewPropertyAnimato
 
 *For a working implementation of this library see the `sample/` folder.*
 
-**REMEMBER TO UNSUBSCRIBE YOUR SUBSCRIPTIONS WHEN YOU'RE DONE WITH THEM!**
+**Remember to unsubscribe your subscriptions when you're done with them!**
+
+
             
 Simple `ViewPropertyAnimator` example
 -------------------------------------
