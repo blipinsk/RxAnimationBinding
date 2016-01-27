@@ -21,8 +21,22 @@ Contents: `RxAnimation`, `RxAnimator`, `RxValueAnimator`, `RxViewPropertyAnimato
 
 *For a working implementation of this library see the `sample/` folder.*
 
-Simple example:
---------------
+**REMEMBER TO UNSUBSCRIBE YOUR SUBSCRIPTIONS WHEN YOU'RE DONE WITH THEM!**
+            
+Simple `ViewPropertyAnimator` example
+-------------------------------------
+          
+    ViewPropertyAnimator animator = yourView.animate().scaleX(1.3f);
+    RxViewPropertyAnimator.updates(animator)
+            .subscribe(new Action1<ValueAnimator>() {
+                @Override
+                public void call(ValueAnimator valueAnimator) {
+                    //react to an update
+                }
+            });  
+
+Simple `ValueAnimator` example:
+-------------------------------
 
     ValueAnimator animator = ValueAnimator.ofInt(4, 8, 15, 16, 23, 42);
     animator.setDuration(108);
@@ -43,7 +57,6 @@ Simple example:
                 }
             });
                 
-**REMEMBER TO UNSUBSCRIBE YOUR SUBSCRIPTIONS WHEN YOU'RE DONE WITH THEM!**
 
 Ongoing development
 -------------------
