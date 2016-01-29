@@ -15,7 +15,6 @@ import com.bartoszlipinski.viewpropertyobjectanimator.ViewPropertyObjectAnimator
 import com.jakewharton.rxbinding.view.RxView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
@@ -46,7 +45,12 @@ public class MainActivity extends Activity {
             R.id.emission_resume,
             R.id.emission_update})
     View[] emissionViews;
-    Handler[] handlers;
+    Handler startHandler = new Handler();
+    Handler endHandler = new Handler();
+    Handler cancelHandler = new Handler();
+    Handler repeatHandler = new Handler();
+    Handler pauseHandler = new Handler();
+    Handler resumeHandler = new Handler();
     Handler updateHandler = new Handler();
     ValueAnimator animator;
     List<Subscription> subscriptions = new ArrayList<>();
@@ -71,9 +75,12 @@ public class MainActivity extends Activity {
         for (Subscription subscription : subscriptions) {
             subscription.unsubscribe();
         }
-        for (Handler handler : handlers) {
-            handler.removeCallbacksAndMessages(null);
-        }
+        startHandler.removeCallbacksAndMessages(null);
+        endHandler.removeCallbacksAndMessages(null);
+        cancelHandler.removeCallbacksAndMessages(null);
+        repeatHandler.removeCallbacksAndMessages(null);
+        pauseHandler.removeCallbacksAndMessages(null);
+        resumeHandler.removeCallbacksAndMessages(null);
         updateHandler.removeCallbacksAndMessages(null);
     }
 
@@ -193,17 +200,32 @@ public class MainActivity extends Activity {
                         }
                     }
                 }));
-
-        handlers = new Handler[emissionViews.length - 1];
-        Arrays.fill(handlers, new Handler());
     }
 
     public void blinkEmissionView(final int position) {
         Handler handler;
-        if (position < 6) {
-            handler = handlers[position];
-        } else {
-            handler = updateHandler;
+        switch (position) {
+            case 0:
+                handler = startHandler;
+                break;
+            case 1:
+                handler = endHandler;
+                break;
+            case 2:
+                handler = cancelHandler;
+                break;
+            case 3:
+                handler = repeatHandler;
+                break;
+            case 4:
+                handler = pauseHandler;
+                break;
+            case 5:
+                handler = resumeHandler;
+                break;
+            default:
+                handler = updateHandler;
+                break;
         }
         if (emissionViews[position].isSelected()) {
             handler.removeCallbacksAndMessages(null);
