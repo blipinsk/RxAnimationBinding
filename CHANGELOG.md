@@ -14,14 +14,14 @@ compile 'com.bartoszlipinski.rxanimationbinding:rxanimationbinding:X.X.X'
 ```groovy
 compile 'com.bartoszlipinski:rxanimationbinding:X.X.X'
 ```
-
+---
 
  * New module!
     * `rxanimationbinding-support-v4` for the `ViewPropertyAnimatorCompat` from the 'Support Library'
  * Added annotations `@CheckResult` and `@NonNull`
  * Binding classes corrected (added `final` modifier + private constructors)
  
- Version 1.0.0 *(2016-01-25)*
+Version 1.0.0 *(2016-01-25)*
 ----------------------------
 
  * AppCompat removed from the library
