@@ -14,7 +14,7 @@ compile 'com.bartoszlipinski.rxanimationbinding:rxanimationbinding:X.X.X'
 ```groovy
 compile 'com.bartoszlipinski:rxanimationbinding:X.X.X'
 ```
----
+==
 
  * New module!
     * `rxanimationbinding-support-v4` for the `ViewPropertyAnimatorCompat` from the 'Support Library'
