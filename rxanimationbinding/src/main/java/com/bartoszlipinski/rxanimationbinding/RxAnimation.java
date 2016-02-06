@@ -15,26 +15,38 @@
  */
 package com.bartoszlipinski.rxanimationbinding;
 
+import android.support.annotation.CheckResult;
+import android.support.annotation.NonNull;
 import android.view.animation.Animation;
 
 import rx.Observable;
 
 import static com.bartoszlipinski.rxanimationbinding.internal.Preconditions.checkNotNull;
 
-public class RxAnimation {
+public final class RxAnimation {
 
-    public static Observable<Animation> starts(Animation animation){
+    @CheckResult
+    @NonNull
+    public static Observable<Animation> starts(Animation animation) {
         checkNotNull(animation, "animation == null");
         return Observable.create(new AnimationListenerOnSubscribe(animation, AnimationEvent.START));
     }
 
-    public static Observable<Animation> ends(Animation animation){
+    @CheckResult
+    @NonNull
+    public static Observable<Animation> ends(Animation animation) {
         checkNotNull(animation, "animation == null");
         return Observable.create(new AnimationListenerOnSubscribe(animation, AnimationEvent.END));
     }
 
-    public static Observable<Animation> repeats(Animation animation){
+    @CheckResult
+    @NonNull
+    public static Observable<Animation> repeats(Animation animation) {
         checkNotNull(animation, "animation == null");
         return Observable.create(new AnimationListenerOnSubscribe(animation, AnimationEvent.REPEAT));
+    }
+
+    private RxAnimation() {
+        throw new AssertionError("No instances.");
     }
 }
