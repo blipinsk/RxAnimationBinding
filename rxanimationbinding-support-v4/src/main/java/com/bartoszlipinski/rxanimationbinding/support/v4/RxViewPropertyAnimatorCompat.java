@@ -13,23 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bartoszlipinski.rxanimationbinding;
+package com.bartoszlipinski.rxanimationbinding.support.v4;
 
-import rx.Subscription;
-
-public abstract class OnUnsubscribedCallback implements Subscription {
-    private boolean mUnsubscribed;
-
-    @Override
-    public final void unsubscribe() {
-        mUnsubscribed = true;
-        onUnsubscribe();
-    }
-
-    protected abstract void onUnsubscribe();
-
-    @Override
-    public final boolean isUnsubscribed() {
-        return mUnsubscribed;
-    }
+public class RxViewPropertyAnimatorCompat {
 }

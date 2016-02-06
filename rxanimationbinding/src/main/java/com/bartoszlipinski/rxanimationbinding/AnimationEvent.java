@@ -15,32 +15,19 @@
  */
 package com.bartoszlipinski.rxanimationbinding;
 
-final class AnimationEvent {
+public final class AnimationEvent {
 
-    // Typical events
-    static final int START = 0;
-    static final int END = 1;
-    static final int REPEAT = 2;
-    static final int CANCEL = 3;
-
-    // Other events
-    static final int PAUSE = 4;
-    static final int RESUME = 5;
-    static final int UPDATE = 6;
+    public static final int START = 0;
+    public static final int END = 1;
+    public static final int REPEAT = 2;
+    public static final int CANCEL = 3;
+    public static final int PAUSE = 4;
+    public static final int RESUME = 5;
+    public static final int UPDATE = 6;
 
     private AnimationEvent() {
         throw new AssertionError("No instances.");
     }
 
-    static boolean isTypical(int event) {
-        switch (event) {
-            case START:
-            case END:
-            case REPEAT:
-            case CANCEL:
-                return true;
-            default:
-                return false;
-        }
-    }
 }
+
