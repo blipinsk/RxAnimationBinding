@@ -18,6 +18,8 @@ package com.bartoszlipinski.rxanimationbinding;
 import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.support.annotation.CheckResult;
+import android.support.annotation.NonNull;
 
 import rx.Observable;
 
@@ -25,32 +27,44 @@ import static com.bartoszlipinski.rxanimationbinding.internal.Preconditions.chec
 
 public class RxAnimator {
 
+    @CheckResult
+    @NonNull
     public static Observable<Animator> starts(Animator animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(new AnimatorListenerOnSubscribe(animator, AnimationEvent.START));
     }
 
+    @CheckResult
+    @NonNull
     public static Observable<Animator> ends(Animator animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(new AnimatorListenerOnSubscribe(animator, AnimationEvent.END));
     }
 
+    @CheckResult
+    @NonNull
     public static Observable<Animator> cancels(Animator animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(new AnimatorListenerOnSubscribe(animator, AnimationEvent.CANCEL));
     }
 
+    @CheckResult
+    @NonNull
     public static Observable<Animator> repeats(Animator animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(new AnimatorListenerOnSubscribe(animator, AnimationEvent.REPEAT));
     }
 
+    @CheckResult
+    @NonNull
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static Observable<Animator> pauses(Animator animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(new AnimatorPauseListenerOnSubscribe(animator, AnimationEvent.PAUSE));
     }
 
+    @CheckResult
+    @NonNull
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static Observable<Animator> resumes(Animator animator) {
         checkNotNull(animator, "animator == null");

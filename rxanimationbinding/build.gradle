@@ -8,6 +8,7 @@ def bintrayCfg = rootProject.ext.bintrayConfig
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "com.android.support:support-annotations:${libs.support}"
     compile "io.reactivex:rxandroid:${libs.rx_android}"
     compile "io.reactivex:rxjava:${libs.rx_java}"
 
@@ -56,5 +57,3 @@ publish {
     website = bintrayCfg.website
     licences = bintrayCfg.licences
 }
-
-

@@ -19,6 +19,8 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.support.annotation.CheckResult;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 
@@ -28,60 +30,80 @@ import static com.bartoszlipinski.rxanimationbinding.internal.Preconditions.chec
 
 public class RxViewPropertyAnimator {
 
+    @CheckResult
+    @NonNull
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
     public static Observable<Animator> starts(View v) {
         checkNotNull(v, "v == null");
         return Observable.create(new ViewPropertyAnimatorListenerOnSubscribe(v.animate(), AnimationEvent.START));
     }
 
+    @CheckResult
+    @NonNull
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
     public static Observable<Animator> starts(ViewPropertyAnimator animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(new ViewPropertyAnimatorListenerOnSubscribe(animator, AnimationEvent.START));
     }
 
+    @CheckResult
+    @NonNull
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
     public static Observable<Animator> ends(View v) {
         checkNotNull(v, "v == null");
         return Observable.create(new ViewPropertyAnimatorListenerOnSubscribe(v.animate(), AnimationEvent.END));
     }
 
+    @CheckResult
+    @NonNull
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
     public static Observable<Animator> ends(ViewPropertyAnimator animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(new ViewPropertyAnimatorListenerOnSubscribe(animator, AnimationEvent.END));
     }
 
+    @CheckResult
+    @NonNull
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
     public static Observable<Animator> cancels(View v) {
         checkNotNull(v, "v == null");
         return Observable.create(new ViewPropertyAnimatorListenerOnSubscribe(v.animate(), AnimationEvent.CANCEL));
     }
 
+    @CheckResult
+    @NonNull
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
     public static Observable<Animator> cancels(ViewPropertyAnimator animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(new ViewPropertyAnimatorListenerOnSubscribe(animator, AnimationEvent.CANCEL));
     }
 
+    @CheckResult
+    @NonNull
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
     public static Observable<Animator> repeats(View v) {
         checkNotNull(v, "v == null");
         return Observable.create(new ViewPropertyAnimatorListenerOnSubscribe(v.animate(), AnimationEvent.REPEAT));
     }
 
+    @CheckResult
+    @NonNull
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
     public static Observable<Animator> repeats(ViewPropertyAnimator animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(new ViewPropertyAnimatorListenerOnSubscribe(animator, AnimationEvent.REPEAT));
     }
 
+    @CheckResult
+    @NonNull
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static Observable<ValueAnimator> updates(View v) {
         checkNotNull(v, "v == null");
         return Observable.create(new ViewPropertyAnimatorUpdateListenerOnSubscribe(v.animate()));
     }
 
+    @CheckResult
+    @NonNull
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static Observable<ValueAnimator> updates(ViewPropertyAnimator animator) {
         checkNotNull(animator, "animator == null");

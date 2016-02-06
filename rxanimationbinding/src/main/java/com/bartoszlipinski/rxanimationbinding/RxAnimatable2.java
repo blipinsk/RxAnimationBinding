@@ -19,6 +19,8 @@ import android.annotation.TargetApi;
 import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.CheckResult;
+import android.support.annotation.NonNull;
 
 import rx.Observable;
 
@@ -27,12 +29,16 @@ import static com.bartoszlipinski.rxanimationbinding.internal.Preconditions.chec
 @TargetApi(Build.VERSION_CODES.M)
 public class RxAnimatable2 {
 
+    @CheckResult
+    @NonNull
     @TargetApi(Build.VERSION_CODES.M)
     public static Observable<Drawable> starts(Animatable2 animatable2){
         checkNotNull(animatable2, "animatable2 == null");
         return Observable.create(new Animatable2ListenerOnSubscribe(animatable2, AnimationEvent.START));
     }
 
+    @CheckResult
+    @NonNull
     @TargetApi(Build.VERSION_CODES.M)
     public static Observable<Drawable> ends(Animatable2 animatable2){
         checkNotNull(animatable2, "animatable2 == null");
