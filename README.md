@@ -19,14 +19,17 @@ compile 'com.bartoszlipinski.rxanimationbinding:rxanimationbinding:1.1.0'
 
 Contents: `RxAnimation`, `RxAnimator`, `RxValueAnimator`, `RxViewPropertyAnimator`, `RxTransition` and `RxAnimatable2`.
 
+==
 
-'support-v4' library bindings:
+`support-v4` library bindings:
 
 ```groovy
 compile 'com.bartoszlipinski.rxanimationbinding:rxanimationbinding:1.1.0'
 ```
 
 Contents: `RxViewPropertyAnimatorCompat`.
+
+==
 
 *For a working implementation of this library see the `sample/` folder.*
 
