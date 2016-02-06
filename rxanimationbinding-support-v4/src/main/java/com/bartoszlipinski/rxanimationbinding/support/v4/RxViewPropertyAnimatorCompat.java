@@ -17,7 +17,6 @@ package com.bartoszlipinski.rxanimationbinding.support.v4;
 
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.view.View;
 
@@ -31,26 +30,10 @@ public final class RxViewPropertyAnimatorCompat {
 
     @CheckResult
     @NonNull
-    public static Observable<View> starts(View v) {
-        checkNotNull(v, "v == null");
-        return Observable.create(
-                new ViewPropertyAnimatorListenerOnSubscribe(ViewCompat.animate(v), AnimationEvent.START));
-    }
-
-    @CheckResult
-    @NonNull
     public static Observable<View> starts(ViewPropertyAnimatorCompat animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(
                 new ViewPropertyAnimatorListenerOnSubscribe(animator, AnimationEvent.START));
-    }
-
-    @CheckResult
-    @NonNull
-    public static Observable<View> ends(View v) {
-        checkNotNull(v, "v == null");
-        return Observable.create(
-                new ViewPropertyAnimatorListenerOnSubscribe(ViewCompat.animate(v), AnimationEvent.END));
     }
 
     @CheckResult
@@ -63,26 +46,10 @@ public final class RxViewPropertyAnimatorCompat {
 
     @CheckResult
     @NonNull
-    public static Observable<View> cancels(View v) {
-        checkNotNull(v, "v == null");
-        return Observable.create(
-                new ViewPropertyAnimatorListenerOnSubscribe(ViewCompat.animate(v), AnimationEvent.CANCEL));
-    }
-
-    @CheckResult
-    @NonNull
     public static Observable<View> cancels(ViewPropertyAnimatorCompat animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(
                 new ViewPropertyAnimatorListenerOnSubscribe(animator, AnimationEvent.CANCEL));
-    }
-
-    @CheckResult
-    @NonNull
-    public static Observable<View> updates(View v) {
-        checkNotNull(v, "v == null");
-        return Observable.create(
-                new ViewPropertyAnimatorUpdateListenerOnSubscribe(ViewCompat.animate(v)));
     }
 
     @CheckResult
