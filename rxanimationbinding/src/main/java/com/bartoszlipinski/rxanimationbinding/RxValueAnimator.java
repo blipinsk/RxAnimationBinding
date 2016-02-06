@@ -16,16 +16,23 @@
 package com.bartoszlipinski.rxanimationbinding;
 
 import android.animation.ValueAnimator;
+import android.support.annotation.CheckResult;
+import android.support.annotation.NonNull;
 
 import rx.Observable;
 
 import static com.bartoszlipinski.rxanimationbinding.internal.Preconditions.checkNotNull;
 
-public class RxValueAnimator extends RxAnimator{
+public final class RxValueAnimator extends RxAnimator{
 
+    @CheckResult
+    @NonNull
     public static Observable<ValueAnimator> updates(ValueAnimator animator) {
         checkNotNull(animator, "animator == null");
         return Observable.create(new ValueAnimatorUpdateListenerOnSubscribe(animator));
     }
 
+    private RxValueAnimator() {
+        throw new AssertionError("No instances.");
+    }
 }

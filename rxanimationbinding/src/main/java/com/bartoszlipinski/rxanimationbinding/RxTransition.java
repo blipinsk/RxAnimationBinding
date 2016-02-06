@@ -17,6 +17,8 @@ package com.bartoszlipinski.rxanimationbinding;
 
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.support.annotation.CheckResult;
+import android.support.annotation.NonNull;
 import android.transition.Transition;
 
 import rx.Observable;
@@ -24,31 +26,44 @@ import rx.Observable;
 import static com.bartoszlipinski.rxanimationbinding.internal.Preconditions.checkNotNull;
 
 @TargetApi(Build.VERSION_CODES.KITKAT)
-public class RxTransition {
+public final class RxTransition {
 
+    @CheckResult
+    @NonNull
     public static Observable<Transition> starts(Transition transition) {
         checkNotNull(transition, "transition == null");
         return Observable.create(new TransitionListenerOnSubscribe(transition, AnimationEvent.START));
     }
 
+    @CheckResult
+    @NonNull
     public static Observable<Transition> ends(Transition transition) {
         checkNotNull(transition, "transition == null");
         return Observable.create(new TransitionListenerOnSubscribe(transition, AnimationEvent.END));
     }
 
+    @CheckResult
+    @NonNull
     public static Observable<Transition> cancels(Transition transition) {
         checkNotNull(transition, "transition == null");
         return Observable.create(new TransitionListenerOnSubscribe(transition, AnimationEvent.CANCEL));
     }
 
+    @CheckResult
+    @NonNull
     public static Observable<Transition> pauses(Transition transition) {
         checkNotNull(transition, "transition == null");
         return Observable.create(new TransitionListenerOnSubscribe(transition, AnimationEvent.PAUSE));
     }
 
+    @CheckResult
+    @NonNull
     public static Observable<Transition> resumes(Transition transition) {
         checkNotNull(transition, "transition == null");
         return Observable.create(new TransitionListenerOnSubscribe(transition, AnimationEvent.RESUME));
     }
 
+    private RxTransition() {
+        throw new AssertionError("No instances.");
+    }
 }

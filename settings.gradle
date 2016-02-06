@@ -1,4 +1,4 @@
-include ':rxanimationbinding'
+include ':rxanimationbinding', ':rxanimationbinding-support-v4'
 
 include ':sample'
 

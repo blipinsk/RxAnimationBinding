@@ -17,7 +17,7 @@ package com.bartoszlipinski.rxanimationbinding;
 
 import rx.Subscription;
 
-abstract class OnUnsubscribedCallback implements Subscription {
+public abstract class OnUnsubscribedCallback implements Subscription {
     private boolean mUnsubscribed;
 
     @Override
