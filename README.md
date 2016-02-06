@@ -75,7 +75,7 @@ Simple examples
 Ongoing development
 -------------------
   
-Currently I'm working on bindings for `animators` included in the `support-v4`. Coming soon.
+Currently I'm working on the Kotlin extension methods for all bindings. Stay tuned!.
 
 Credits
 -------
