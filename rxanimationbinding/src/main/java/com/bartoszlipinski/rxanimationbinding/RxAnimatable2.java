@@ -27,7 +27,7 @@ import rx.Observable;
 import static com.bartoszlipinski.rxanimationbinding.internal.Preconditions.checkNotNull;
 
 @TargetApi(Build.VERSION_CODES.M)
-public class RxAnimatable2 {
+public final class RxAnimatable2 {
 
     @CheckResult
     @NonNull

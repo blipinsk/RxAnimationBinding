@@ -71,7 +71,7 @@ public class RxAnimator {
         return Observable.create(new AnimatorPauseListenerOnSubscribe(animator, AnimationEvent.RESUME));
     }
 
-    private RxAnimator() {
+    RxAnimator() {
         throw new AssertionError("No instances.");
     }
 }

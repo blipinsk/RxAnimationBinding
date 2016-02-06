@@ -26,7 +26,7 @@ import rx.Observable;
 import static com.bartoszlipinski.rxanimationbinding.internal.Preconditions.checkNotNull;
 
 @TargetApi(Build.VERSION_CODES.KITKAT)
-public class RxTransition {
+public final class RxTransition {
 
     @CheckResult
     @NonNull

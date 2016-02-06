@@ -23,7 +23,7 @@ import rx.Observable;
 
 import static com.bartoszlipinski.rxanimationbinding.internal.Preconditions.checkNotNull;
 
-public class RxAnimation {
+public final class RxAnimation {
 
     @CheckResult
     @NonNull

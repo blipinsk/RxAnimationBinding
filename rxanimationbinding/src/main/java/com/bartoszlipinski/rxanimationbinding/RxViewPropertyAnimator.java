@@ -28,7 +28,7 @@ import rx.Observable;
 
 import static com.bartoszlipinski.rxanimationbinding.internal.Preconditions.checkNotNull;
 
-public class RxViewPropertyAnimator {
+public final class RxViewPropertyAnimator {
 
     @CheckResult
     @NonNull
