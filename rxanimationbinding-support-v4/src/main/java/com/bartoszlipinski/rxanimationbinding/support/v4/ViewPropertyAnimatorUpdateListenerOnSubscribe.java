@@ -17,7 +17,11 @@ package com.bartoszlipinski.rxanimationbinding.support.v4;
 
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.support.v4.view.ViewPropertyAnimatorCompat;
+import android.support.v4.view.ViewPropertyAnimatorUpdateListener;
 import android.view.View;
+
+import com.bartoszlipinski.rxanimationbinding.OnUnsubscribedCallback;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -25,51 +29,51 @@ import rx.Subscriber;
 @TargetApi(Build.VERSION_CODES.KITKAT)
 final class ViewPropertyAnimatorUpdateListenerOnSubscribe implements Observable.OnSubscribe<View> {
 
-//    private final ViewPropertyAnimator animator;
-//
-//    public ViewPropertyAnimatorUpdateListenerOnSubscribe(ViewPropertyAnimator animator) {
-//        this.animator = animator;
-//    }
+    private final ViewPropertyAnimatorCompat animator;
 
-    public void call(final Subscriber<? super View> subscriber) {
-//        final ViewPropertyAnimatorUpdateListenerWrapper updateListener =
-//                new ViewPropertyAnimatorUpdateListenerWrapper(this) {
-//                    @Override
-//                    void onUpdate(ValueAnimator animator) {
-//                        if (!subscriber.isUnsubscribed()) {
-//                            subscriber.onNext(animator);
-//                        }
-//                    }
-//                };
-//
-//        animator.setUpdateListener(updateListener);
-//
-//        subscriber.add(new OnUnsubscribedCallback() {
-//            @Override
-//            protected void onUnsubscribe() {
-//                updateListener.onUnsubscribe();
-//            }
-//        });
+    public ViewPropertyAnimatorUpdateListenerOnSubscribe(ViewPropertyAnimatorCompat animator) {
+        this.animator = animator;
     }
 
-//    private static abstract class ViewPropertyAnimatorUpdateListenerWrapper implements ValueAnimator.AnimatorUpdateListener {
-//        ViewPropertyAnimatorUpdateListenerOnSubscribe onSubscribe;
-//
-//        ViewPropertyAnimatorUpdateListenerWrapper(ViewPropertyAnimatorUpdateListenerOnSubscribe onSubscribe) {
-//            this.onSubscribe = onSubscribe;
-//        }
-//
-//        void onUnsubscribe() {
-//            onSubscribe = null;
-//        }
-//
-//        abstract void onUpdate(ValueAnimator animator);
-//
-//        @Override
-//        public void onAnimationUpdate(ValueAnimator animator) {
-//            if (onSubscribe != null) {
-//                onUpdate(animator);
-//            }
-//        }
-//    }
+    public void call(final Subscriber<? super View> subscriber) {
+        final ViewPropertyAnimatorUpdateListenerWrapper updateListener =
+                new ViewPropertyAnimatorUpdateListenerWrapper(this) {
+                    @Override
+                    void onUpdate(View view) {
+                        if (!subscriber.isUnsubscribed()) {
+                            subscriber.onNext(view);
+                        }
+                    }
+                };
+
+        animator.setUpdateListener(updateListener);
+
+        subscriber.add(new OnUnsubscribedCallback() {
+            @Override
+            protected void onUnsubscribe() {
+                updateListener.onUnsubscribe();
+            }
+        });
+    }
+
+    private static abstract class ViewPropertyAnimatorUpdateListenerWrapper implements ViewPropertyAnimatorUpdateListener {
+        ViewPropertyAnimatorUpdateListenerOnSubscribe onSubscribe;
+
+        ViewPropertyAnimatorUpdateListenerWrapper(ViewPropertyAnimatorUpdateListenerOnSubscribe onSubscribe) {
+            this.onSubscribe = onSubscribe;
+        }
+
+        void onUnsubscribe() {
+            onSubscribe = null;
+        }
+
+        abstract void onUpdate(View view);
+
+        @Override
+        public void onAnimationUpdate(View view) {
+            if (onSubscribe != null) {
+                onUpdate(view);
+            }
+        }
+    }
 }

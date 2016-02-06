@@ -17,7 +17,12 @@ package com.bartoszlipinski.rxanimationbinding.support.v4;
 
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.support.v4.view.ViewPropertyAnimatorCompat;
+import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.view.View;
+
+import com.bartoszlipinski.rxanimationbinding.AnimationEvent;
+import com.bartoszlipinski.rxanimationbinding.OnUnsubscribedCallback;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -25,90 +30,84 @@ import rx.Subscriber;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
 final class ViewPropertyAnimatorListenerOnSubscribe implements Observable.OnSubscribe<View> {
 
-//    private final ViewPropertyAnimatorCompat animator;
-//    private final int eventToCallOn;
-//
-//    public ViewPropertyAnimatorListenerOnSubscribe(ViewPropertyAnimatorCompat animator, int eventToCallOn) {
-//        this.animator = animator;
-//        this.eventToCallOn = eventToCallOn;
-//    }
+    private final ViewPropertyAnimatorCompat animator;
+    private final int eventToCallOn;
+
+    public ViewPropertyAnimatorListenerOnSubscribe(ViewPropertyAnimatorCompat animator, int eventToCallOn) {
+        this.animator = animator;
+        this.eventToCallOn = eventToCallOn;
+    }
 
     public void call(final Subscriber<? super View> subscriber) {
-//        final ViewPropertyAnimatorListenerWrapper listener = new ViewPropertyAnimatorListenerWrapper(this) {
-//            @Override
-//            void onStart(ViewPropertyAnimatorCompat animator) {
-//                if (eventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
-//                    subscriber.onNext(animator);
-//                }
-//            }
-//
-//            @Override
-//            void onEnd(Animator animator) {
-//                if (eventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
-//                    subscriber.onNext(animator);
-//                }
-//            }
-//
-//            @Override
-//            void onCancel(Animator animator) {
-//                if (eventToCallOn == AnimationEvent.CANCEL && !subscriber.isUnsubscribed()) {
-//                    subscriber.onNext(animator);
-//                }
-//            }
-//
-//            @Override
-//            void onRepeat(Animator animator) {
-//                if (eventToCallOn == AnimationEvent.REPEAT && !subscriber.isUnsubscribed()) {
-//                    subscriber.onNext(animator);
-//                }
-//            }
-//        };
-//        animator.setListener(listener);
-//
-//        subscriber.add(new OnUnsubscribedCallback() {
-//            @Override
-//            protected void onUnsubscribe() {
-//                listener.onUnsubscribe();
-//            }
-//        });
+        final ViewPropertyAnimatorListenerWrapper listener = new ViewPropertyAnimatorListenerWrapper(this) {
+            @Override
+            void onStart(View view) {
+                if (eventToCallOn == AnimationEvent.START && !subscriber.isUnsubscribed()) {
+                    subscriber.onNext(view);
+                }
+            }
+
+            @Override
+            void onEnd(View view) {
+                if (eventToCallOn == AnimationEvent.END && !subscriber.isUnsubscribed()) {
+                    subscriber.onNext(view);
+                }
+            }
+
+            @Override
+            void onCancel(View view) {
+                if (eventToCallOn == AnimationEvent.CANCEL && !subscriber.isUnsubscribed()) {
+                    subscriber.onNext(view);
+                }
+            }
+        };
+
+        animator.setListener(listener);
+
+        subscriber.add(new OnUnsubscribedCallback() {
+            @Override
+            protected void onUnsubscribe() {
+                listener.onUnsubscribe();
+            }
+        });
     }
-//
-//    private static abstract class ViewPropertyAnimatorListenerWrapper implements Animator.AnimatorListener {
-//        ViewPropertyAnimatorListenerOnSubscribe onSubscribe;
-//
-//        ViewPropertyAnimatorListenerWrapper(ViewPropertyAnimatorListenerOnSubscribe onSubscribe) {
-//            this.onSubscribe = onSubscribe;
-//        }
-//
-//        void onUnsubscribe() {
-//            onSubscribe = null;
-//        }
-//
-//        abstract void onStart(ViewPropertyAnimatorCompat animator);
-//
-//        abstract void onEnd(ViewPropertyAnimatorCompat animator);
-//
-//        abstract void onCancel(ViewPropertyAnimatorCompat animator);
-//
-//        @Override
-//        public void onAnimationStart(ViewPropertyAnimatorCompat animator) {
-//            if (onSubscribe != null) {
-//                onStart(animator);
-//            }
-//        }
-//
-//        @Override
-//        public void onAnimationEnd(ViewPropertyAnimatorCompat animator) {
-//            if (onSubscribe != null) {
-//                onEnd(animator);
-//            }
-//        }
-//
-//        @Override
-//        public void onAnimationCancel(ViewPropertyAnimatorCompat animator) {
-//            if (onSubscribe != null) {
-//                onCancel(animator);
-//            }
-//        }
-//    }
+
+    private static abstract class ViewPropertyAnimatorListenerWrapper implements ViewPropertyAnimatorListener {
+        ViewPropertyAnimatorListenerOnSubscribe onSubscribe;
+
+        ViewPropertyAnimatorListenerWrapper(ViewPropertyAnimatorListenerOnSubscribe onSubscribe) {
+            this.onSubscribe = onSubscribe;
+        }
+
+        void onUnsubscribe() {
+            onSubscribe = null;
+        }
+
+        abstract void onStart(View view);
+
+        abstract void onEnd(View view);
+
+        abstract void onCancel(View view);
+
+        @Override
+        public void onAnimationStart(View view) {
+            if (onSubscribe != null) {
+                onStart(view);
+            }
+        }
+
+        @Override
+        public void onAnimationEnd(View view) {
+            if (onSubscribe != null) {
+                onEnd(view);
+            }
+        }
+
+        @Override
+        public void onAnimationCancel(View view) {
+            if (onSubscribe != null) {
+                onCancel(view);
+            }
+        }
+    }
 }
