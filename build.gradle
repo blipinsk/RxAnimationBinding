@@ -37,7 +37,7 @@ ext {
             userOrg        : "blipinsk",
             userName       : "Bartosz Lipinski",
             userEmail      : "bartoszlipinski90@gmail.com",
-            groupId        : "com.bartoszlipinski",
+            groupId        : "com.bartoszlipinski.rxanimationbinding",
             name           : "RxAnimationBinding",
             artifactRoot   : "rxanimationbinding",
             artifactSupport: "rxanimationbinding-support-v4",
@@ -62,7 +62,7 @@ subprojects {
     group = bintrayConfig.groupId
     version = configuration.versionName
 
-    if (isUploading && project.name in [bintrayConfig.artifactRoot]) {
+    if (isUploading && project.name in [bintrayConfig.artifactRoot, bintrayConfig.artifactSupport]) {
         println project.name
         apply plugin: 'maven'
 
