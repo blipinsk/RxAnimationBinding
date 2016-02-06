@@ -44,4 +44,8 @@ public class RxAnimatable2 {
         checkNotNull(animatable2, "animatable2 == null");
         return Observable.create(new Animatable2ListenerOnSubscribe(animatable2, AnimationEvent.END));
     }
+
+    private RxAnimatable2() {
+        throw new AssertionError("No instances.");
+    }
 }

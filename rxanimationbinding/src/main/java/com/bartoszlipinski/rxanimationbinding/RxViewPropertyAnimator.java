@@ -110,4 +110,7 @@ public class RxViewPropertyAnimator {
         return Observable.create(new ViewPropertyAnimatorUpdateListenerOnSubscribe(animator));
     }
 
+    private RxViewPropertyAnimator() {
+        throw new AssertionError("No instances.");
+    }
 }

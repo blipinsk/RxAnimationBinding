@@ -45,4 +45,8 @@ public class RxAnimation {
         checkNotNull(animation, "animation == null");
         return Observable.create(new AnimationListenerOnSubscribe(animation, AnimationEvent.REPEAT));
     }
+
+    private RxAnimation() {
+        throw new AssertionError("No instances.");
+    }
 }

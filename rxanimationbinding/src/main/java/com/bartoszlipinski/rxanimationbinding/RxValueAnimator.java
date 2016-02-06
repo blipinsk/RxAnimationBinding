@@ -32,4 +32,7 @@ public class RxValueAnimator extends RxAnimator{
         return Observable.create(new ValueAnimatorUpdateListenerOnSubscribe(animator));
     }
 
+    private RxValueAnimator() {
+        throw new AssertionError("No instances.");
+    }
 }

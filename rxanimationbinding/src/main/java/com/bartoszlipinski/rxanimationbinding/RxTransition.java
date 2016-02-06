@@ -63,4 +63,7 @@ public class RxTransition {
         return Observable.create(new TransitionListenerOnSubscribe(transition, AnimationEvent.RESUME));
     }
 
+    private RxTransition() {
+        throw new AssertionError("No instances.");
+    }
 }
