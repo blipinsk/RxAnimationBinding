@@ -15,8 +15,6 @@
  */
 package com.bartoszlipinski.rxanimationbinding.support.v4;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.support.v4.view.ViewPropertyAnimatorUpdateListener;
 import android.view.View;
@@ -26,7 +24,6 @@ import com.bartoszlipinski.rxanimationbinding.OnUnsubscribedCallback;
 import rx.Observable;
 import rx.Subscriber;
 
-@TargetApi(Build.VERSION_CODES.KITKAT)
 final class ViewPropertyAnimatorUpdateListenerOnSubscribe implements Observable.OnSubscribe<View> {
 
     private final ViewPropertyAnimatorCompat animator;
