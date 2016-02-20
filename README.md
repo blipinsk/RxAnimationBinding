@@ -39,7 +39,7 @@ Simple examples
 ---------------
 
  1. **`ViewPropertyAnimator`**
-        ```java
+```java
         ViewPropertyAnimator animator = yourView.animate().scaleX(1.3f);
         
         RxViewPropertyAnimator.updates(animator)
@@ -49,7 +49,7 @@ Simple examples
                         //react to an update
                     }
                 });  
-            ```
+```
  2. **`ValueAnimator`** 
        ```java
         ValueAnimator animator = ValueAnimator.ofInt(4, 8, 15, 16, 23, 42);
